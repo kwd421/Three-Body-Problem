@@ -4,20 +4,35 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: research-site
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
-      - name: Check repository migration status
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Restore original source and reproducible certificates
         run: |
-          if [ ! -f tools/build_site.py ]; then
-            echo 'Source migration is not yet complete.' >> "$GITHUB_STEP_SUMMARY"
-            exit 0
+          python tools/bootstrap.py
+          node archive/v1.2-source/three_body_proof/run_certificates.js
+          python archive/v1.2-source/three_body_proof/verify_certificate.py archive/v1.2-source/three_body_proof/asymmetric_Tp7.json archive/v1.2-source/three_body_proof/asymmetric_T1.json > archive/v1.2-source/three_body_proof/reverification.json
+      - name: Preserve readable research artifacts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add archive
+          if ! git diff --cached --quiet; then
+            git commit -m 'Restore original source and regenerate checked v1.2 certificates'
+            git push origin HEAD:main
           fi
-          python tools/build_site.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: legacy-research-artifacts
+          path: archive/
+          retention-days: 30
