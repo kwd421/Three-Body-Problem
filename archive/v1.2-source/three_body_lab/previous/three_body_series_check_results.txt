@@ -1,0 +1,19 @@
+Equilateral reference: max position component discrepancy = 1.110223e-16
+
+Asymmetric example, G=1, t=0.1, degree=20:
+body 1: r=(-0.992083574684,  0.035348944346) v=( 0.159718499730,  0.407574110400)
+body 2: r=( 0.993487745792, -0.014714676921) v=(-0.130039594669, -0.094317126028)
+body 3: r=(-0.008297305634,  0.994693469832) v=(-0.066546436797, -0.106313286115)
+
+Degree | max position component discrepancy versus DOP853
+     4 | 9.565550e-07
+     6 | 9.897550e-09
+     8 | 1.124324e-10
+    10 | 1.347367e-12
+    12 | 1.698641e-14
+    16 | 2.220446e-16
+    20 | 2.220446e-16
+
+Six short-time 3D checks: max state-component discrepancy = 3.330669e-16
+
+These numerical comparisons are NOT rigorous error bounds or global-solution proofs.

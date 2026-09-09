@@ -1,0 +1,3 @@
+{"method":"legacy","complete":false,"time":["6427","8192"],"steps":317,"rejected":451,"minDistance":"0.169649275359642645363287","width":1.8755779406845172e-18,"reason":"768-attempt proof budget exhausted","ms":1655.945453}
+{"method":"scheduler","complete":false,"time":["13057","16384"],"steps":471,"rejected":297,"minDistance":"0.117924592857032677507876","width":3.620104310628211e-18,"reason":"768-attempt proof budget exhausted","ms":2351.987758}
+{"method":"weighted","complete":false,"time":["425049","524288"],"steps":216,"rejected":27,"minDistance":"0.080231447529340803319596","width":0.001207681303894543,"reason":"enclosure width exceeds proof budget","ms":1164.889979}

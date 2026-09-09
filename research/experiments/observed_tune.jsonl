@@ -1,0 +1,3 @@
+{"order":20,"stepPower":9,"complete":true,"reached":["1","1"],"steps":512,"rejected":0,"reason":null,"minDistance":"0.075367552495159610639050","width":0.0005592906087229843,"ms":4584.391152}
+{"order":24,"stepPower":10,"complete":false,"reached":["2013217","2097152"],"steps":985,"rejected":15,"reason":"enclosure width exceeds proof budget","minDistance":"0.084240846671061075641606","width":0.0019710120234405345,"ms":12541.732984999999}
+{"order":28,"stepPower":11,"complete":false,"reached":["3361287","4194304"],"steps":1646,"rejected":18,"reason":"enclosure width exceeds proof budget","minDistance":"0.101015425921816631212768","width":0.0013778531070843545,"ms":27689.669208}

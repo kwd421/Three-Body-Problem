@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('fs'),path=require('path'),assert=require('node:assert/strict');
+const V=require('../src/validated.js'),root=path.join(__dirname,'..');
+const legacy=JSON.parse(fs.readFileSync(path.join(root,'archive/v1.2-source/three_body_proof/asymmetric_Tp1.json'),'utf8'));
+assert(V.check(legacy).verified);
+const current=JSON.parse(fs.readFileSync(path.join(root,'research/results/asymmetric_T1.json'),'utf8'));
+current.schema='three-body-interval-certificate-1';current.input.order=16;
+assert.throws(()=>V.check(current));
+const short=JSON.parse(fs.readFileSync(path.join(root,'research/results/smoke.json'),'utf8'));
+short.summary.minDistanceLower='999999';short.summary.maxPositionWidth=0;
+const replay=V.check(short);assert.notEqual(replay.minDistanceLower,'999999');assert(replay.maxPositionWidth>0);
+console.log('3/3 schema compatibility and untrusted-summary tests passed');

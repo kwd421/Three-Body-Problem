@@ -4,35 +4,70 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: research-site
   cancel-in-progress: false
 jobs:
-  build:
+  verify-build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '22'
-      - name: Restore original source and reproducible certificates
+      - name: Prepare editable source without overwriting changes
+        run: python tools/upgrade.py
+      - name: Reproduce bounded certified experiment
+        run: node tools/run_research.js
+      - name: Independently verify exact theorem bounds
+        run: python tools/verify_research.py
+      - name: Exact arithmetic and adversarial witness tests
         run: |
-          python tools/bootstrap.py
-          node archive/v1.2-source/three_body_proof/run_certificates.js
-          python archive/v1.2-source/three_body_proof/verify_certificate.py archive/v1.2-source/three_body_proof/asymmetric_Tp7.json archive/v1.2-source/three_body_proof/asymmetric_T1.json > archive/v1.2-source/three_body_proof/reverification.json
-      - name: Preserve readable research artifacts
+          python tests/test_exact.py
+          node tests/test_compatibility.js
+          python -m compileall -q src tools tests
+      - name: Preserve readable source and checked certificates
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add archive
+          git add src site tests research archive
           if ! git diff --cached --quiet; then
-            git commit -m 'Restore original source and regenerate checked v1.2 certificates'
+            git commit -m 'Preserve editable v1.3 source and independently verified T=1 witnesses'
             git push origin HEAD:main
           fi
+          echo "SITE_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Build static site from independently checked result
+        run: python tools/build_site.py
       - uses: actions/upload-artifact@v4
         with:
-          name: legacy-research-artifacts
-          path: archive/
+          name: verified-static-site
+          path: dist/
           retention-days: 30
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/
+      - name: Record verification scope
+        run: |
+          echo '## Verified finite-time experiment' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Exact stated IVP: [0,1], all pair distances > 0.07536, endpoint position widths < 0.00056.' >> "$GITHUB_STEP_SUMMARY"
+          echo '512 steps replayed independently in Python. Not a general solution, chaos proof, or formal proof-assistant artifact.' >> "$GITHUB_STEP_SUMMARY"
+  deploy:
+    needs: verify-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Publish only verified site
+        id: deployment
+        uses: actions/deploy-pages@v4
