@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0d141e"><title>삼체 실험실 · Three Body Lab</title><style>:root{color-scheme:dark;--bg:#080d14;--panel:#101721;--panel2:#131d29;--stroke:#25313f;--muted:#8c9cac;--text:#e3edf5;--cyan:#63e1da;--coral:#ff907e;--gold:#f0ca75;--danger:#ff9b92;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans CJK KR",sans-serif;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:12px}body{height:100vh;height:100dvh;overflow:hidden}button,input,select{font:inherit}button,select,input[type=number]{color:var(--text);border:1px solid var(--stroke);background:#15202d;border-radius:7px}button{cursor:pointer;padding:8px 10px;transition:background .15s,border-color .15s}button:hover{background:#203144;border-color:#476078}button:disabled{cursor:default;opacity:.42}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}button.primary{background:var(--cyan);color:#092424;border-color:var(--cyan);font-weight:700}button.primary:hover{background:#8af0e9}button.subtle{background:transparent}button.small{padding:5px 8px;font-size:11px}.topbar{height:62px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;justify-content:space-between;padding:0 22px;gap:14px;background:#0d141e}.brand{display:flex;gap:13px;align-items:center}.logo{width:28px;height:28px;border:1px solid #466579;border-radius:50%;position:relative;transform:rotate(-25deg)}.logo:before,.logo:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--cyan);left:-2px;top:8px}.logo:after{background:var(--coral);left:21px;top:11px}.brand-name{font-size:16px;letter-spacing:3px;font-weight:750}.brand-sub{margin-left:12px;font-size:11px;letter-spacing:0;color:var(--muted);font-weight:400}.top-actions{display:flex;gap:7px;align-items:center}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--stroke);border-radius:20px;padding:5px 9px;font-size:10px;color:var(--muted);white-space:nowrap}.pill .dot{width:5px;height:5px;background:var(--cyan);border-radius:50%}.version{color:var(--cyan);font:10px var(--mono);letter-spacing:.5px;margin-right:5px}.workspace{height:calc(100% - 62px);display:grid;grid-template-columns:276px minmax(340px,1fr) 302px}.sidebar{background:var(--panel);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#344354 transparent}.left{border-right:1px solid var(--stroke)}.right{border-left:1px solid var(--stroke)}.section{padding:18px 17px;border-bottom:1px solid var(--stroke)}.section h2{font-size:11px;letter-spacing:1px;font-weight:700;display:flex;align-items:center;justify-content:space-between;margin:0 0 13px}.eyebrow{font:9px var(--mono);letter-spacing:1.5px;color:var(--muted)}.section-num{color:#5b748a;font:10px var(--mono);margin-right:7px}.presets{display:grid;grid-template-columns:1fr 1fr;gap:7px}.preset{padding:10px 8px;text-align:left;position:relative;background:#111e2b;min-height:61px}.preset .glyph{font-size:17px;display:block;height:22px;line-height:19px;color:#91a9bd}.preset .label{font-size:11px}.preset.active{border-color:#438a89;background:#15302f}.preset.active .glyph{color:var(--cyan)}.random-row{display:flex;gap:6px;margin-top:10px}.random-row input{width:0;flex:1;padding:6px 8px;font-family:var(--mono)}.random-row button{white-space:nowrap}.hint{font-size:10px;color:var(--muted);line-height:1.7;margin:9px 0 0}.hint strong{font-weight:500;color:#c6d7e5}.body-tabs{display:flex;gap:5px;margin-bottom:12px}.body-tab{flex:1;padding:6px 5px;font:11px var(--mono);border-color:var(--stroke)}.body-tab.active{background:#263545;border-color:#64798b}.body-dot{width:6px;height:6px;display:inline-block;border-radius:50%;margin-right:6px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field label{font-size:10px;color:var(--muted)}.field input,.field select{width:100%;padding:7px 8px;height:32px;min-width:0}.field input{font-family:var(--mono);font-size:11px}.field.full{grid-column:1/-1}.mass-field{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:10px;margin-bottom:9px}.mass-field label{font:11px var(--mono);color:var(--muted)}.mass-field input{padding:6px 8px;width:100%;font-family:var(--mono)}.apply-row{display:flex;gap:7px;margin-top:11px}.apply-row .primary{flex:1}.dirty{display:none;color:var(--gold);font-size:10px;margin-top:8px}.dirty.on{display:block}.setting-row{margin-bottom:10px}.setting-row label{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.setting-row select{padding:8px;width:100%}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}details{margin-top:12px}summary{color:var(--muted);font-size:10px;cursor:pointer}details p{font-size:10px;color:var(--muted);line-height:1.8}.stage{min-width:0;display:flex;flex-direction:column;background:var(--bg);position:relative}.viewport{position:relative;flex:1;overflow:hidden;min-height:260px;touch-action:none}.viewport canvas{display:block;width:100%;height:100%}.view-overlay{position:absolute;top:23px;left:25px;pointer-events:none;max-width:calc(100% - 50px)}.view-overlay .eyebrow{color:#7895aa}.view-overlay h1{margin:8px 0 8px;font-size:27px;font-weight:550;letter-spacing:-1px}.view-overlay p{color:#8da1b5;font-size:11px;line-height:1.75;max-width:390px;margin:0}.legend{display:flex;gap:14px;font-size:10px;margin-top:15px;color:#a4b4c4}.legend i{display:inline-block;width:14px;margin-right:6px;border-top:2px solid #819aad;vertical-align:3px}.legend i.dashed{border-top-style:dashed}.view-tools{position:absolute;right:15px;bottom:18px;display:flex;gap:5px;flex-direction:column}.view-tools button{width:31px;height:30px;padding:0;font-size:15px;background:#111c29dd}.view-tools button.active{border-color:#559d99;color:var(--cyan)}.view-hint{position:absolute;bottom:17px;left:24px;font-size:10px;color:#688398;pointer-events:none}.view-hint .coord{font:10px var(--mono);display:block;margin-bottom:5px}.view-message{position:absolute;left:24px;bottom:70px;right:55px;background:#33231ddf;border:1px solid #9b7251;padding:12px 14px;border-radius:8px;color:#ffdaa1;line-height:1.6;font-size:11px;display:none}.view-message.visible{display:block}.transport{padding:13px 18px;border-top:1px solid var(--stroke);background:#0e1621;display:flex;gap:9px;align-items:center;flex-wrap:wrap}.play{min-width:86px}.time-readout{font:12px var(--mono);color:#cbdae7;margin-left:4px;min-width:95px}.time-readout small{font:9px var(--mono);color:#627d93;display:block;margin-top:4px}.speed-control{margin-left:auto;display:flex;align-items:center;gap:7px;color:var(--muted);font-size:10px}.speed-control select{padding:6px 5px;max-width:78px}.statusbar{padding:8px 19px;background:#0d141e;border-top:1px solid #1b2938;color:#6f879c;font:9px var(--mono);display:flex;justify-content:space-between;gap:8px}.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.metric{padding:10px 9px;background:#131e2a;border:1px solid #253340;border-radius:7px;min-width:0}.metric .label{font-size:9px;color:var(--muted);margin-bottom:6px}.metric .value{font:14px var(--mono);font-weight:450;color:#d1e4f1;letter-spacing:-.4px;white-space:nowrap}.metric.primary-metric{grid-column:1/-1;background:#13302e;border-color:#28534f;display:flex;justify-content:space-between;align-items:center}.metric.primary-metric .value{color:var(--cyan);font-size:19px}.metric.primary-metric .label{margin:0}.quality{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.6}.quality.warn{color:var(--gold)}.chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.chart-head h2{margin:0}.chart-head select{padding:3px 4px;font-size:10px}.chart-wrap{height:109px;position:relative}.chart-wrap canvas{width:100%;height:100%;display:block}.chart-foot{display:flex;justify-content:space-between;font:9px var(--mono);color:#59718a;margin-top:3px}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.toggle-row label{font-size:11px;color:#c7d6e3}.toggle{appearance:none;width:29px;height:16px;background:#31404d;border:1px solid #4d5e6e;border-radius:12px;cursor:pointer;position:relative;flex:none;margin:0}.toggle:after{content:"";position:absolute;top:2px;left:3px;width:10px;height:10px;border-radius:50%;background:#8194a6;transition:left .15s}.toggle:checked{background:#195651;border-color:#2d8b83}.toggle:checked:after{left:14px;background:var(--cyan)}.inline-select{padding:4px 6px;max-width:100px;font:10px var(--mono)}.experiment-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.experiment-grid button{text-align:left;line-height:1.6;padding:9px 8px;background:#172332}.experiment-grid small{display:block;font:9px var(--mono);color:#68869c}.experiment-grid strong{font-size:10px;font-weight:500}.exp-time{display:flex;gap:8px;align-items:center;margin-bottom:10px;color:var(--muted);font-size:10px}.exp-time input{width:63px;padding:5px 7px;font:11px var(--mono)}.progress-area{display:none;margin-top:12px}.progress-area.visible{display:block}.progress-top{display:flex;justify-content:space-between;gap:5px;color:var(--muted);font-size:10px;align-items:center}.progress-track{height:3px;background:#253443;margin-top:9px;border-radius:4px;overflow:hidden}.progress-fill{height:100%;width:0;background:var(--cyan)}.note-link{display:block;width:100%;text-align:left;margin-top:9px;color:var(--cyan);font-size:10px;background:transparent;border:0;padding:3px 0}.display-opts{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--muted)}.display-opts label{display:flex;align-items:center;gap:5px}.display-opts input{accent-color:var(--cyan);margin:0}.toast{position:fixed;bottom:27px;left:50%;transform:translateX(-50%) translateY(20px);border:1px solid #3d6475;background:#142936f5;color:#daeaf4;max-width:min(620px,92vw);border-radius:9px;padding:12px 19px;line-height:1.7;box-shadow:0 8px 30px #0008;opacity:0;pointer-events:none;z-index:100;transition:.2s;font-size:12px}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.modal-shade{position:fixed;inset:0;background:#000a;z-index:40;display:none;align-items:center;justify-content:center;padding:25px;backdrop-filter:blur(5px)}.modal-shade.open{display:flex}.modal{width:min(1050px,100%);max-height:88vh;background:#101b27;border:1px solid #3c5165;border-radius:13px;overflow:auto;box-shadow:0 25px 80px #0009}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--stroke);gap:15px;position:sticky;top:0;background:#101b27;z-index:2}.modal-head h2{font-size:16px;font-weight:550;margin:0}.modal-head button{white-space:nowrap}.modal-body{padding:22px}.modal-body p{font-size:12px;color:#a9bac9;line-height:1.9}.modal-body h3{font-size:14px;font-weight:550;color:#d8e8f4;margin-top:23px}.report{margin-bottom:28px}.report h3{margin:0 0 12px}.report .stamp{font:10px var(--mono);color:#7c94a9;margin-bottom:11px}.table-scroll{overflow:auto;border:1px solid var(--stroke);border-radius:7px}.report table{border-collapse:collapse;width:100%;font-size:11px;white-space:nowrap}.report th,.report td{text-align:left;padding:10px 11px;border-bottom:1px solid #233544}.report th{font-weight:500;color:#839db3;background:#132231;font-size:10px}.report td{font-family:var(--mono)}.report td:first-child{font-family:var(--sans)}.report tr:last-child td{border-bottom:0}.report .pass{color:var(--cyan)}.report .fail{color:var(--danger)}.report .note{font-size:11px;line-height:1.9;color:#97acbf;margin:10px 0 0}.empty{padding:30px 0;text-align:center;color:var(--muted);line-height:2}.report-chart{width:100%;height:160px;margin-top:15px}.help-columns{display:grid;grid-template-columns:1fr 1fr;gap:30px}.help-columns h3{margin-top:0}.source-list a{color:var(--cyan);font-size:11px;text-decoration:none;line-height:2}.kbd{font:10px var(--mono);background:#24374a;border:1px solid #466176;border-radius:4px;padding:2px 5px;margin-right:4px}.footnote{font-size:10px!important;color:#7f95a8!important}.warning-text{color:var(--gold)!important}.equation{font:13px var(--mono);line-height:2;background:#0c141e;padding:14px;border-radius:8px;overflow:auto}.nojs{padding:30px;color:var(--gold)}
+@media(min-width:1600px){.workspace{grid-template-columns:300px minmax(400px,1fr) 326px}.section{padding:20px}.view-overlay{top:28px;left:30px}.view-overlay h1{font-size:31px}}
+@media(max-width:1150px){.workspace{grid-template-columns:240px minmax(310px,1fr) 260px}.section{padding:15px 12px}.brand-sub{display:none}.view-overlay{left:20px}.view-overlay h1{font-size:24px}.view-overlay p{max-width:280px;font-size:10px}.transport{padding:11px 12px}.time-readout{font-size:11px;min-width:84px}.metric .value{font-size:12px}.topbar{padding:0 15px}}
+@media(max-width:960px){body{height:auto;overflow:auto}.workspace{height:auto;grid-template-columns:235px minmax(0,1fr);grid-template-rows:minmax(720px,calc(100dvh - 62px)) auto}.stage{grid-column:2;grid-row:1}.left{grid-column:1;grid-row:1;max-height:calc(100dvh - 62px);min-height:720px}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--stroke);border-left:0}.right .section{border-right:1px solid var(--stroke)}.pill{display:none}.top-actions button{padding:7px;font-size:10px}.view-overlay p{max-width:330px}}
+@media(max-width:620px){.topbar{height:56px;padding:0 12px;gap:8px}.brand{gap:8px}.brand-name{font-size:12px;letter-spacing:2px}.logo{width:22px;height:22px}.logo:after{left:16px;top:8px}.top-actions{gap:4px}.top-actions .export-top,.version{display:none}.workspace{display:flex;flex-direction:column}.stage{order:0;height:620px;min-height:620px}.left{order:1;min-height:0;max-height:none;border-right:0;display:grid;grid-template-columns:1fr}.right{order:2;display:block}.section{padding:19px 20px}.left .presets{grid-template-columns:repeat(3,1fr)}.view-overlay{top:22px;left:20px}.view-overlay h1{font-size:25px}.view-overlay p{font-size:10px;max-width:310px}.view-hint{left:18px;bottom:18px;font-size:9px}.transport{gap:6px;padding:12px}.time-readout{font-size:11px;min-width:90px}.speed-control{margin-left:auto}.play{min-width:76px}.transport button{padding:8px}.statusbar{font-size:8px;padding:8px 12px}.help-columns{grid-template-columns:1fr;gap:12px}.modal-shade{padding:12px}.modal{max-height:92dvh}.modal-body{padding:16px}.modal-head{padding:14px}.modal-head h2{font-size:13px}.modal-head button{font-size:10px;padding:7px}.view-tools{right:12px}.topbar .brand-sub{display:none}}
+</style></head>
+<body>
+<header class="topbar"><div class="brand"><div class="logo" aria-hidden="true"></div><div class="brand-name">THREE BODY<span class="brand-sub">삼체 실험실</span></div><span class="version">v1.1</span></div><div class="top-actions"><span class="pill"><span class="dot"></span>LOCAL · OFFLINE</span><button id="save" class="subtle export-top">초기조건 저장</button><button id="load" class="subtle">불러오기</button><button id="help" class="subtle">사용법 / 원리</button></div></header>
+<div class="workspace">
+<aside class="sidebar left" aria-label="초기조건과 물리 설정">
+<section class="section"><h2><span><span class="section-num">01</span>초기조건</span><span class="eyebrow">PRESETS</span></h2><div class="presets">
+<button class="preset active" data-preset="figure8"><span class="glyph">∞</span><span class="label">8자 궤도</span></button>
+<button class="preset" data-preset="equilateral"><span class="glyph">△</span><span class="label">정삼각형 회전</span></button>
+<button class="preset" data-preset="asymmetric"><span class="glyph">⋮</span><span class="label">이전 비대칭 예제</span></button>
+<button class="preset" data-preset="butterfly"><span class="glyph">⤨</span><span class="label">민감도 실험</span></button>
+<button class="preset" data-preset="hierarchy"><span class="glyph">⊙</span><span class="label">쌍성 + 바깥 천체</span></button>
+<button class="preset" data-preset="closepass"><span class="glyph">↗</span><span class="label">극근접 스트레스</span></button>
+</div><div class="random-row"><input id="seed" type="number" step="1" min="0" max="4294967295" value="314159" aria-label="랜덤 시드"><button id="random" class="small">시드 랜덤</button></div><p class="hint">아래 수치는 <strong>시작 상태</strong>입니다. 재생 중의 좌표가 아닙니다.</p></section>
+<section class="section"><h2><span><span class="section-num">02</span>물체 편집</span><span class="eyebrow">INITIAL STATE</span></h2><div class="body-tabs"><button class="body-tab active" data-body="0"><i class="body-dot" style="background:var(--cyan)"></i>A</button><button class="body-tab" data-body="1"><i class="body-dot" style="background:var(--coral)"></i>B</button><button class="body-tab" data-body="2"><i class="body-dot" style="background:var(--gold)"></i>C</button></div><div class="mass-field"><label for="mass">질량 m</label><input id="mass" type="number" min="0.00000001" max="100000000" step="any"></div><div class="fields"><div class="field"><label for="posx">위치 x</label><input id="posx" type="number" step="any"></div><div class="field"><label for="posy">위치 y</label><input id="posy" type="number" step="any"></div><div class="field"><label for="velx">속도 vx</label><input id="velx" type="number" step="any"></div><div class="field"><label for="vely">속도 vy</label><input id="vely" type="number" step="any"></div></div><div class="apply-row"><button id="apply" class="primary" disabled>변경사항 적용</button><button id="recenter" title="위치의 질량중심과 질량중심 속도를 0으로">중심 정렬</button></div><div id="dirty" class="dirty">변경사항이 있습니다. 적용하면 t = 0에서 다시 시작합니다.</div><p class="hint">일시정지 후 물체를 드래그해 새 시작 상태를 만들 수 있습니다. Shift + 드래그는 속도를 바꿉니다.</p></section>
+<section class="section"><h2><span><span class="section-num">03</span>수치 계산</span><span class="eyebrow">SOLVER</span></h2><div class="setting-row"><label for="method">적분 방법</label><select id="method"><option value="rk45">RK45 · 적응형 / 기본</option><option value="taylor">Taylor 16 · 적응형 / 실험</option><option value="rk4">RK4 · 고정 간격</option><option value="leapfrog">Leapfrog · 고정 간격</option></select></div><div class="two"><div class="setting-row"><label for="tolerance">상대 허용오차</label><select id="tolerance"><option value="1e-8">1 × 10⁻⁸</option><option value="1e-10" selected>1 × 10⁻¹⁰</option><option value="1e-12">1 × 10⁻¹²</option></select></div><div class="setting-row"><label for="dt">고정 간격 Δt</label><select id="dt" disabled><option value=".0005">0.0005</option><option value=".001">0.001</option><option value=".002" selected>0.002</option><option value=".005">0.005</option><option value=".01">0.01</option><option value=".02">0.02</option></select></div></div><div class="setting-row"><label for="epsilon">중력 연화 ε · 0이면 원래 뉴턴 중력</label><select id="epsilon"><option value="0">0 · 연화 없음 / 기본</option><option value=".001">0.001 · 수정된 중력</option><option value=".01">0.01 · 수정된 중력</option><option value=".05">0.05 · 수정된 중력</option></select></div><p class="hint">설정을 바꾼 뒤 위의 <strong>변경사항 적용</strong>을 누르세요.</p><details><summary>오차 기준과 근접 안전장치</summary><p>G = 1인 무차원 평면 문제입니다. 적응형 적분기는 atol = rtol / 100, 최대 간격 .02를 사용합니다. 국소 오차 추정과 근접 시간척도로 간격을 조절하지만 엄밀한 오차 상한은 아닙니다.<br><br>연화가 없을 때 거리가 1e-5 이내이거나 요구 간격이 1e-12 미만이면 중단합니다. 고정 간격이 근접 운동을 해상할 수 없을 때도 중단합니다. 충돌 시 병합·반발·순간이동을 만들지 않습니다. 이는 충돌 검출의 수학적 인증이나 충돌 정칙화가 아닙니다.</p></details><button id="save2" class="note-link">초기조건 JSON 저장 ↗</button></section>
+</aside>
+<main class="stage"><div id="viewport" class="viewport"><canvas id="universe" aria-label="세 물체의 중력 궤도. 일시정지 상태에서 물체 드래그, 휠 확대 가능."></canvas><div class="view-overlay"><div class="eyebrow">NEWTONIAN DYNAMICS / PLANAR</div><h1 id="scenario-title">8자 궤도</h1><p id="scenario-desc"></p><div class="legend"><span><i></i>원본 궤도</span><span id="ghost-legend" hidden><i class="dashed"></i>미세 섭동 복제</span></div></div><div class="view-tools"><button id="zoom-in" title="확대" aria-label="확대">+</button><button id="zoom-out" title="축소" aria-label="축소">−</button><button id="fit" class="active" title="자동 화면 맞춤 (F)" aria-label="자동 화면 맞춤">⌖</button><button id="fullscreen" title="전체화면" aria-label="전체화면">⛶</button></div><div class="view-hint"><span id="coords" class="coord">G = 1 / DIMENSIONLESS</span>빈 공간 드래그 · 화면 이동 &nbsp; / &nbsp; 휠 · 확대</div><div id="view-message" class="view-message" role="status"></div></div>
+<div class="transport"><button id="play" class="primary play">Ⅱ 일시정지</button><button id="reset" title="시작 상태로 (R)">↺</button><button id="step" title="0.02 시간단위 진행 (.)">Ⅰ▷</button><div class="time-readout">t <span id="time">0.000</span><small id="period-info">T ≈ 6.325914</small></div><div class="speed-control"><label for="speed">재생</label><select id="speed"><option value=".1">0.1×</option><option value=".25">0.25×</option><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="5">5×</option><option value="10">10×</option><option value="20">20×</option></select></div></div><div class="statusbar"><span id="run-status">RUNNING · RK45</span><span id="step-status">0 STEPS</span><span id="fps-status">— FPS</span></div>
+</main>
+<aside class="sidebar right" aria-label="진단과 실험">
+<section class="section"><h2><span>실시간 진단</span><span class="eyebrow">DIAGNOSTICS</span></h2><div class="metric-grid"><div class="metric primary-metric"><div class="label">현재 에너지 오차<br><span style="font:9px var(--mono)">|ΔE / E*|</span></div><div id="energy" class="value">0</div></div><div class="metric"><div class="label">누적 최대 에너지 오차</div><div id="max-energy" class="value">0</div></div><div class="metric"><div class="label">각운동량 변화 |ΔL|</div><div id="angular" class="value">0</div></div><div class="metric"><div class="label">최소 물체 간 거리</div><div id="distance" class="value">1.0000</div></div><div class="metric"><div class="label">최근 계산 간격 h</div><div id="last-h" class="value">—</div></div><div class="metric"><div class="label">총운동량 변화 |ΔP|</div><div id="momentum" class="value">0</div></div><div class="metric"><div class="label">질량중심 예측 오차</div><div id="com-error" class="value">0</div></div></div><div id="quality" class="quality">에너지 보존만으로 궤도 정확성을 판단하지 않습니다.</div></section>
+<section class="section"><div class="chart-head"><h2>오차 이력</h2><span class="eyebrow">LOG₁₀ |ΔE / E*|</span></div><div class="chart-wrap"><canvas id="energy-chart" aria-label="시간에 따른 에너지 오차 그래프"></canvas></div><div class="chart-foot"><span id="chart-from">t 0.0</span><span id="chart-to">0.0</span></div><button id="csv" class="note-link">관측 기록 CSV 저장 ↗</button></section>
+<section class="section"><div class="toggle-row"><label for="ghost">미세 섭동 궤도 비교</label><input id="ghost" class="toggle" type="checkbox"></div><div class="toggle-row"><label for="delta" style="font-size:10px;color:var(--muted)">A의 초기 x 변화량 δ</label><select id="delta" class="inline-select"><option value="1e-8">1e-8</option><option value="1e-6" selected>1e-6</option><option value=".0001">1e-4</option><option value=".01">1e-2</option></select></div><div class="toggle-row" style="margin-bottom:0"><label style="font-size:10px;color:var(--muted)">현재 위치 RMS 차이</label><span id="separation" style="font:12px var(--mono);color:var(--gold)">꺼짐</span></div><p class="hint">켜거나 δ를 바꾸면 t = 0부터 비교합니다. 분리가 커져도 그 자체로 혼돈이 증명되지는 않습니다.</p></section>
+<section class="section"><h2><span>실험 실행</span><span class="eyebrow">TEST → COMPARE</span></h2><div class="exp-time"><label for="experiment-time">초기조건부터 T =</label><input id="experiment-time" type="number" min=".01" max="60" step="any" value="6"><span>까지</span></div><div class="experiment-grid"><button data-experiment="benchmark"><small>01 / VERIFY</small><strong>내장 기준시험</strong></button><button data-experiment="compare"><small>02 / CONVERGE</small><strong>적분기 비교</strong></button><button data-experiment="reversal"><small>03 / REVERSE</small><strong>시간 반전</strong></button><button data-experiment="sensitivity"><small>04 / PERTURB</small><strong>민감도 검증</strong></button></div><div id="progress-area" class="progress-area"><div class="progress-top"><span id="progress-label">계산 준비</span><button id="cancel-experiment" class="small">중단</button></div><div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div></div><button id="show-reports" class="note-link">실험 기록 보기 <span id="report-count">(0)</span> ↗</button><p class="hint">별도 복제 상태에서 계산합니다. 실행 중인 궤도는 일시정지되며 변경되지 않습니다.</p></section>
+<section class="section"><h2><span>화면</span><span class="eyebrow">VIEW</span></h2><div class="display-opts"><label><input id="grid" type="checkbox" checked>격자</label><label><input id="vectors" type="checkbox">속도</label><label><input id="triangle" type="checkbox">연결선</label><label><input id="barycenter" type="checkbox" checked>질량중심</label></div><div class="toggle-row" style="margin-top:13px;margin-bottom:0"><label for="trail" style="font-size:10px;color:var(--muted)">궤적 길이 · 시간단위</label><select id="trail" class="inline-select"><option value="2">2</option><option value="6.5" selected>6.5</option><option value="15">15</option><option value="30">30</option></select></div><p class="hint">스페이스: 재생 / 정지 &nbsp; R: 리셋 &nbsp; F: 맞춤<br>프레임이 느려지면 재생 속도만 줄이고, 물리 시간은 건너뛰지 않습니다.</p></section>
+</aside></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div><input id="file-input" type="file" accept=".json,application/json" hidden>
+<div id="reports-modal" class="modal-shade" role="dialog" aria-modal="true" aria-labelledby="report-title"><div class="modal"><div class="modal-head"><h2 id="report-title">실험 기록</h2><div><button id="export-reports" class="small">기록 JSON 저장</button> <button data-close="reports-modal" class="small">닫기 ×</button></div></div><div id="report-body" class="modal-body"></div></div></div>
+<div id="help-modal" class="modal-shade" role="dialog" aria-modal="true" aria-labelledby="help-title"><div class="modal"><div class="modal-head"><h2 id="help-title">관찰에서 검증으로 · 삼체 실험실</h2><button data-close="help-modal" class="small">닫기 ×</button></div><div class="modal-body"><div class="help-columns"><div><h3>먼저 해볼 실험</h3><p><strong>정삼각형 회전 → 내장 기준시험</strong><br>알고 있는 정확해와 비교해 계산기를 검증합니다.</p><p><strong>8자 궤도 → 적분기 비교</strong><br>Δt를 절반으로 줄였을 때 차이가 줄어드는지 확인합니다. 에너지 오차와 위치 차이를 함께 봅니다.</p><p><strong>민감도 실험 → T = 20 → 민감도 검증</strong><br>초기조건을 바꾼 효과가 수치 정밀도를 바꾼 차이보다 큰지 살펴봅니다.</p><p><strong>극근접 스트레스 → RK4 또는 Leapfrog</strong><br>고정 간격으로 해상하지 못하는 근접 통과가 안전하게 중단되는지 확인합니다. 중단은 실패를 숨기지 않기 위한 동작입니다.</p><h3>조작</h3><p><span class="kbd">SPACE</span>재생 / 정지 &nbsp; <span class="kbd">R</span>리셋<br><span class="kbd">F</span>자동 화면 맞춤 &nbsp; <span class="kbd">.</span>한 관측 간격 진행<br>휠은 커서 기준 확대, 빈 공간 드래그는 화면 이동입니다. 일시정지 후 물체를 드래그하면 <em>현재 상태 전체</em>를 새 t = 0 상태로 사용합니다. Shift + 드래그는 속도를 편집합니다.</p><p>초기조건 JSON은 재현용 <strong>시작 설정</strong>을 저장하며, 현재 시점 체크포인트나 이전 궤적을 저장하지 않습니다. CSV는 최근 최대 6,000개의 관측점(약 120 시간단위)을 담습니다. 실험 기록은 현재 탭에서 최근 12개까지 유지됩니다.</p></div><div><h3>실제로 계산하는 것</h3><div class="equation">r̈ᵢ = Σⱼ≠ᵢ G mⱼ (rⱼ − rᵢ)<br>　 / (|rⱼ − rᵢ|² + ε²)³ᐟ²</div><p>세 점질량의 <strong>평면 2D 운동</strong>을 JavaScript의 64비트 부동소수점으로 계산합니다. 기본값은 G = 1, ε = 0입니다. 화면의 원 크기는 질량의 시각화일 뿐, 충돌 반지름이 아닙니다. 상대론·유한 크기·중력파는 포함하지 않습니다.</p><p>RK45는 Dormand–Prince 5(4) 쌍의 차이로 국소 오차를 추정합니다. Taylor 16은 이전 급수 재귀식을 매번 다시 전개하며, 위치 17차·속도 16차 다항식과 스텝 절반 비교를 사용합니다. 구현의 수렴반경·전역 오차는 인증하지 않습니다.</p><p>에너지 E = K + U, U = −Σᵢ&lt;ⱼ Gmᵢmⱼ / √(rᵢⱼ² + ε²). 진단의 분모 E* = max(|E₀|, 10⁻¹²(K₀ + |U₀|), 10⁻³⁰). L₀가 0인 경우에도 정의되도록 각운동량은 <strong>절대 변화</strong>를 표시합니다.</p><p class="warning-text">ε &gt; 0은 원래 중력을 바꿉니다. 충돌을 해결한 것으로 해석하지 마세요. 낮은 에너지 오차, 작은 복귀 오차, 두 방법의 일치만으로 궤도 정확성이나 일반해가 증명되지는 않습니다.</p><h3>참고 자료</h3><div class="source-list"><a href="https://people.ucsc.edu/~rmont/NbdyB.html" target="_blank" rel="noopener noreferrer">Montgomery · 8자 궤도와 Simó 초기조건 ↗</a><br><a href="https://arxiv.org/abs/math/0011268" target="_blank" rel="noopener noreferrer">Chenciner & Montgomery (2000) · 8자 궤도 ↗</a><br><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.RK45.html" target="_blank" rel="noopener noreferrer">SciPy · Dormand–Prince RK45 설명 ↗</a><br><a href="https://arxiv.org/abs/0707.3454" target="_blank" rel="noopener noreferrer">Pál & Süli (2007) · 급수 기반 적분 ↗</a></div><p class="footnote">자체 구현의 실험용 계산기입니다. 이 앱은 SciPy·REBOUND를 내부에서 실행하지 않습니다. 외부 라이브러리·네트워크·서버 없이 작동합니다. MIT License · v1.1.0</p></div></div></div></div></div>
+<noscript><div class="nojs">이 시뮬레이터는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜고 파일을 다시 여세요.</div></noscript>
+<script id="physics-source">/* Three Body Lab v1.1.0 — dimensionless planar Newtonian point masses.
+ * Original implementation, MIT license. No external runtime dependencies.
+ * State = [x1,y1,x2,y2,x3,y3,vx1,vy1,vx2,vy2,vx3,vy3].
+ * DP5(4): Dormand & Prince (1980); Taylor recurrence: previous local-series demo.
+ * This is an experimental double-precision solver, not an interval certificate.
+ */
+(function (root) {
+  'use strict';
+  const VERSION = '1.1.0';
+  const PAIRS = [[0, 1], [0, 2], [1, 2]];
+  const DEFAULTS = { method: 'rk45', rtol: 1e-10, atol: 1e-12, dt: .002,
+    maxStep: .02, minStep: 1e-12, G: 1, epsilon: 0, stopRadius: 1e-5,
+    encounterFactor: .15, guardFixed: true };
+  const copy = x => Float64Array.from(x);
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  class SolverError extends Error {
+    constructor(code, message) { super(message); this.name = 'SolverError'; this.code = code; }
+  }
+  function validate(y, m, o = DEFAULTS) {
+    if (!y || y.length !== 12 || !m || m.length !== 3) throw new SolverError('INPUT', '위치·속도 12개와 질량 3개가 필요합니다.');
+    for (const x of y) if (!Number.isFinite(x) || Math.abs(x) > 1e8) throw new SolverError('INPUT', '위치·속도는 유한한 수이며 절댓값이 1e8 이하여야 합니다.');
+    for (const x of m) if (!Number.isFinite(x) || x < 1e-8 || x > 1e8) throw new SolverError('INPUT', '질량은 1e-8 이상 1e8 이하의 양수여야 합니다.');
+    if (!['rk45', 'rk4', 'leapfrog', 'taylor'].includes(o.method)) throw new SolverError('INPUT', '지원하지 않는 적분기입니다.');
+    for (const k of ['rtol', 'atol', 'dt', 'maxStep', 'minStep', 'G', 'stopRadius', 'encounterFactor']) {
+      if (!Number.isFinite(o[k]) || o[k] <= 0) throw new SolverError('INPUT', k + '는 유한한 양수여야 합니다.');
+    }
+    if (o.rtol < 1e-14 || o.rtol > .01 || o.atol < 1e-16 || o.atol > .01) throw new SolverError('INPUT', '허용오차 범위를 벗어났습니다.');
+    if (o.dt < 1e-8 || o.dt > 1 || o.maxStep > 1 || o.minStep > o.maxStep || o.minStep > o.dt) throw new SolverError('INPUT', '시간 간격 범위를 벗어났습니다.');
+    if (!Number.isFinite(o.epsilon) || o.epsilon < 0 || o.epsilon > 10) throw new SolverError('INPUT', '연화 길이는 0 이상 10 이하여야 합니다.');
+    if (o.G > 1e8 || o.stopRadius > 1e6 || o.encounterFactor > .5) throw new SolverError('INPUT', '물리·안전 설정 범위를 벗어났습니다.');
+    if (o.epsilon === 0 && minDistance(y) <= o.stopRadius) throw new SolverError('COLLISION', '초기 두 물체가 중첩되었거나 안전 중단 거리 안에 있습니다.');
+    return true;
+  }
+  function minDistance(y) {
+    let d = Infinity;
+    for (const [i, j] of PAIRS) d = Math.min(d, Math.hypot(y[2*j]-y[2*i], y[2*j+1]-y[2*i+1]));
+    return d;
+  }
+  function center(y, m) {
+    let cx=0,cy=0,vx=0,vy=0,M=0;
+    for(let i=0;i<3;i++){ M+=m[i];cx+=m[i]*y[2*i];cy+=m[i]*y[2*i+1];vx+=m[i]*y[6+2*i];vy+=m[i]*y[7+2*i]; }
+    return {x:cx/M,y:cy/M,vx:vx/M,vy:vy/M,M};
+  }
+  function recenter(y, m) {
+    const s = copy(y), c = center(s,m);
+    for(let i=0;i<3;i++){s[2*i]-=c.x;s[2*i+1]-=c.y;s[6+2*i]-=c.vx;s[7+2*i]-=c.vy;}
+    return s;
+  }
+  function rhs(y, m, o, out = new Float64Array(12)) {
+    out.fill(0);
+    for(let k=0;k<6;k++) out[k]=y[k+6];
+    for(const [i,j] of PAIRS){
+      const dx=y[2*j]-y[2*i], dy=y[2*j+1]-y[2*i+1], d2=dx*dx+dy*dy;
+      if(o.epsilon===0 && d2<=o.stopRadius*o.stopRadius) throw new SolverError('COLLISION','근접 안전 한계에 도달했습니다. 충돌을 임의로 통과시키지 않고 중단합니다.');
+      const q=d2+o.epsilon*o.epsilon, inv=o.G/(q*Math.sqrt(q));
+      const fx=dx*inv,fy=dy*inv;
+      out[6+2*i]+=m[j]*fx;out[7+2*i]+=m[j]*fy;
+      out[6+2*j]-=m[i]*fx;out[7+2*j]-=m[i]*fy;
+    }
+    for(const x of out) if(!Number.isFinite(x)) throw new SolverError('NONFINITE','비유한 가속도가 발생하여 중단했습니다.');
+    return out;
+  }
+  function diagnostics(y,m,o){
+    let K=0,U=0,L=0,px=0,py=0;
+    for(let i=0;i<3;i++){
+      const x=y[2*i],yy=y[2*i+1],vx=y[6+2*i],vy=y[7+2*i];
+      K+=.5*m[i]*(vx*vx+vy*vy);L+=m[i]*(x*vy-yy*vx);px+=m[i]*vx;py+=m[i]*vy;
+    }
+    for(const [i,j] of PAIRS){const dx=y[2*j]-y[2*i],dy=y[2*j+1]-y[2*i+1];U-=o.G*m[i]*m[j]/Math.sqrt(dx*dx+dy*dy+o.epsilon*o.epsilon);}
+    const c=center(y,m);
+    return {K,U,E:K+U,L,px,py,cx:c.x,cy:c.y,cvx:c.vx,cvy:c.vy,minR:minDistance(y)};
+  }
+  function encounterTime(y,m,o){
+    let tau=Infinity;
+    for(const [i,j] of PAIRS){
+      const d=Math.hypot(y[2*j]-y[2*i],y[2*j+1]-y[2*i+1],o.epsilon);
+      const v=Math.hypot(y[6+2*j]-y[6+2*i],y[7+2*j]-y[7+2*i]);
+      tau=Math.min(tau,Math.sqrt(d*d*d/(o.G*(m[i]+m[j]))),d/Math.max(v,1e-100));
+    }
+    return tau;
+  }
+  function scaledError(a,b,y,o,divisor=1){
+    let sum=0;
+    for(let i=0;i<12;i++){const e=(a[i]-b[i])/(divisor*(o.atol+o.rtol*Math.max(Math.abs(y[i]),Math.abs(a[i]))));sum+=e*e;}
+    return Math.sqrt(sum/12);
+  }
+  const DP_A=[[],[1/5],[3/40,9/40],[44/45,-56/15,32/9],[19372/6561,-25360/2187,64448/6561,-212/729],[9017/3168,-355/33,46732/5247,49/176,-5103/18656],[35/384,0,500/1113,125/192,-2187/6784,11/84]];
+  const DP_B=[35/384,0,500/1113,125/192,-2187/6784,11/84,0];
+  const DP_LOW=[5179/57600,0,7571/16695,393/640,-92097/339200,187/2100,1/40];
+  function dpStep(y,h,m,o){
+    const k=[],temp=new Float64Array(12);
+    for(let s=0;s<7;s++){
+      for(let z=0;z<12;z++){let v=y[z];for(let j=0;j<s;j++)v+=h*DP_A[s][j]*k[j][z];temp[z]=v;}
+      k.push(rhs(temp,m,o));
+    }
+    const high=copy(y),low=copy(y);
+    for(let z=0;z<12;z++)for(let j=0;j<7;j++){high[z]+=h*DP_B[j]*k[j][z];low[z]+=h*DP_LOW[j]*k[j][z];}
+    return {y:high,error:scaledError(high,low,y,o),evals:7,exponent:1/5};
+  }
+  function rk4Step(y,h,m,o){
+    const k1=rhs(y,m,o),temp=new Float64Array(12);
+    for(let i=0;i<12;i++)temp[i]=y[i]+h*k1[i]/2;
+    const k2=rhs(temp,m,o);
+    for(let i=0;i<12;i++)temp[i]=y[i]+h*k2[i]/2;
+    const k3=rhs(temp,m,o);
+    for(let i=0;i<12;i++)temp[i]=y[i]+h*k3[i];
+    const k4=rhs(temp,m,o),out=new Float64Array(12);
+    for(let i=0;i<12;i++)out[i]=y[i]+h*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6;
+    return {y:out,error:0,evals:4};
+  }
+  function leapfrogStep(y,h,m,o){
+    const f=rhs(y,m,o),out=copy(y);
+    for(let i=0;i<6;i++){out[i+6]+=h*f[i+6]/2;out[i]+=h*out[i+6];}
+    const g=rhs(out,m,o);
+    for(let i=0;i<6;i++)out[i+6]+=h*g[i+6]/2;
+    return {y:out,error:0,evals:2};
+  }
+  // Position polynomial degree 17 and differentiated velocity degree 16.
+  // Therefore the full-state method has order 16; evaluated afresh each step.
+  function taylorPolynomial(y,h,m,o,degree=17){
+    const a=Array.from({length:degree+1},()=>new Float64Array(6));a[0].set(y.subarray(0,6));a[1].set(y.subarray(6));
+    const pairs=PAIRS.map(([i,j])=>({i,j,dx:new Float64Array(degree-1),dy:new Float64Array(degree-1),s:new Float64Array(degree-1),b:new Float64Array(degree-1)}));
+    for(let n=0;n<=degree-2;n++){
+      for(const p of pairs){
+        const {i,j,dx,dy,s,b}=p;dx[n]=a[n][2*j]-a[n][2*i];dy[n]=a[n][2*j+1]-a[n][2*i+1];
+        let sn=0;for(let k=0;k<=n;k++)sn+=dx[k]*dx[n-k]+dy[k]*dy[n-k];
+        s[n]=sn+(n===0?o.epsilon*o.epsilon:0);
+        if(n===0){if(o.epsilon===0&&sn<=o.stopRadius*o.stopRadius)throw new SolverError('COLLISION','Taylor 전개 중심이 안전 거리 안에 있습니다.');b[0]=s[0]**(-1.5);}
+        else {let bn=0;for(let k=1;k<=n;k++)bn+=(n+k/2)*s[k]*b[n-k];b[n]=-bn/(n*s[0]);}
+        let fx=0,fy=0;for(let k=0;k<=n;k++){fx+=dx[k]*b[n-k];fy+=dy[k]*b[n-k];}
+        const f=o.G/((n+1)*(n+2));
+        a[n+2][2*i]+=f*m[j]*fx;a[n+2][2*i+1]+=f*m[j]*fy;
+        a[n+2][2*j]-=f*m[i]*fx;a[n+2][2*j+1]-=f*m[i]*fy;
+      }
+    }
+    const out=new Float64Array(12);
+    for(let z=0;z<6;z++){
+      let r=0,v=0;for(let n=degree;n>=0;n--)r=r*h+a[n][z];for(let n=degree;n>=1;n--)v=v*h+n*a[n][z];out[z]=r;out[z+6]=v;
+    }
+    return out;
+  }
+  function taylorStep(y,h,m,o){
+    const full=taylorPolynomial(y,h,m,o),half=taylorPolynomial(y,h/2,m,o),fine=taylorPolynomial(half,h/2,m,o);
+    return {y:fine,error:scaledError(fine,full,y,o,65535),evals:0,exponent:1/17};
+  }
+  class Simulator {
+    constructor(y,m,options={}){
+      this.o={...DEFAULTS,...options};validate(y,m,this.o);this.y=copy(y);this.initial=copy(y);this.m=copy(m);this.t=0;this.timeComp=0;
+      this.h=Math.min(this.o.maxStep,this.o.dt);this.stats={steps:0,rejected:0,evals:0,lastH:0,minH:Infinity,maxH:0,maxEnergyError:0,minR:Infinity};
+      this.base=diagnostics(y,m,this.o);this.energyScale=Math.max(Math.abs(this.base.E),1e-12*(this.base.K+Math.abs(this.base.U)),1e-30);
+      this.LScale=Math.max(1,Math.abs(this.base.L));this.status='ready';this.stopReason='';this.stopCode='';this.measure();
+    }
+    measure(){
+      const d=diagnostics(this.y,this.m,this.o);d.dE=(d.E-this.base.E)/this.energyScale;d.dL=d.L-this.base.L;d.dP=Math.hypot(d.px-this.base.px,d.py-this.base.py);
+      d.comError=Math.hypot(d.cx-this.base.cx-this.base.cvx*this.t,d.cy-this.base.cy-this.base.cvy*this.t);
+      this.stats.maxEnergyError=Math.max(this.stats.maxEnergyError,Math.abs(d.dE));this.stats.minR=Math.min(this.stats.minR,d.minR);return d;
+    }
+    stepTo(target){
+      if(!Number.isFinite(target)||target<this.t-1e-12)throw new SolverError('TIME','목표 시간은 현재 시간 이상이어야 합니다.');
+      const remaining=target-this.t;
+      if(remaining<=8*Number.EPSILON*Math.max(1,Math.abs(target))){this.t=target;this.timeComp=0;return false;}
+      if(this.status==='stopped')throw new SolverError(this.stopCode,this.stopReason);
+      const adaptive=this.o.method==='rk45'||this.o.method==='taylor';
+      let h=Math.min(remaining,adaptive?this.h:this.o.dt,this.o.maxStep);
+      const cap=this.o.encounterFactor*encounterTime(this.y,this.m,this.o);
+      if(adaptive)h=Math.min(h,cap);
+      else if(this.o.guardFixed&&h>cap) return this.fail('RESOLUTION','고정 시간 간격이 근접 운동에 비해 큽니다. Δt를 줄이거나 RK45로 전환하세요.');
+      let result,attempt=0;
+      while(true){
+        if(h<this.o.minStep||this.t+h===this.t)return this.fail('MIN_STEP','필요 시간 간격이 최소 한계보다 작습니다. 정칙화 또는 더 높은 정밀도가 필요합니다.');
+        try{
+          if(this.o.method==='rk45')result=dpStep(this.y,h,this.m,this.o);
+          else if(this.o.method==='taylor')result=taylorStep(this.y,h,this.m,this.o);
+          else if(this.o.method==='rk4')result=rk4Step(this.y,h,this.m,this.o);
+          else result=leapfrogStep(this.y,h,this.m,this.o);
+          this.stats.evals+=result.evals;
+          if(!Array.from(result.y).every(Number.isFinite))throw new SolverError('NONFINITE','계산이 유한 범위를 벗어났습니다.');
+          if(this.o.epsilon===0&&minDistance(result.y)<=this.o.stopRadius)throw new SolverError('COLLISION','근접 안전 한계에 도달했습니다.');
+        }catch(e){
+          if(adaptive&&(e.code==='COLLISION'||e.code==='NONFINITE')&&attempt<40){h*=.25;this.stats.rejected++;attempt++;continue;}
+          return this.fail(e.code||'NUMERIC',e.message);
+        }
+        if(!adaptive||result.error<=1){
+          this.y=result.y;
+          // Compensated time summation prevents a spurious tiny final step
+          // after many fixed steps (e.g. 300 * .02 landing just below 6).
+          const correctedH=h-this.timeComp,nextT=this.t+correctedH;
+          this.timeComp=(nextT-this.t)-correctedH;this.t=nextT;this.stats.steps++;this.stats.lastH=h;this.stats.minH=Math.min(this.stats.minH,h);this.stats.maxH=Math.max(this.stats.maxH,h);
+          if(adaptive)this.h=Math.min(this.o.maxStep,h*clamp(result.error===0?4:.9*result.error**(-result.exponent),.2,4));
+          this.status='running';this.measure();return true;
+        }
+        this.stats.rejected++;attempt++;
+        if(attempt>50)return this.fail('REJECTIONS','오차 허용 기준을 만족하지 못해 중단했습니다.');
+        h*=clamp(.9*result.error**(-result.exponent),.1,.5);
+      }
+    }
+    fail(code,message){this.status='stopped';this.stopCode=code;this.stopReason=message;throw new SolverError(code,message);}
+    advanceTo(target,maxSteps=500000){
+      if(!Number.isFinite(target)||target<this.t)throw new SolverError('TIME','목표 시간은 현재 시간 이상의 유한한 수여야 합니다.');
+      if(!Number.isInteger(maxSteps)||maxSteps<1||maxSteps>5000000)throw new SolverError('BUDGET','스텝 예산은 1~5000000의 정수여야 합니다.');
+      let steps=0;
+      while(this.t<target-8*Number.EPSILON*Math.max(1,target)){
+        this.stepTo(target);if(++steps>maxSteps)return this.fail('BUDGET','계산 스텝 한도를 초과했습니다.');
+      }
+      this.t=target;this.timeComp=0;return this.y;
+    }
+  }
+  function rmsDifference(a,b,positionsOnly=false){let s=0;const n=positionsOnly?6:12;for(let i=0;i<n;i++)s+=(a[i]-b[i])**2;return Math.sqrt(s/n);}
+  function relativeStateDifference(a,b){let s=0,n=0;for(let i=0;i<12;i++){s+=(a[i]-b[i])**2;n+=b[i]**2;}return Math.sqrt(s/Math.max(n,1e-30));}
+  function perturb(y,m,delta){const out=copy(y),M=m[0]+m[1]+m[2];out[0]+=delta;const shift=delta*m[0]/M;for(let i=0;i<3;i++)out[2*i]-=shift;return out;}
+  function mulberry32(seed){return function(){let t=seed+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;};}
+  function preset(id,seed=314159){
+    let y,m,title,description,period=null;
+    if(id==='figure8'){
+      // A rotation by pi of Montgomery / Simo's published rounded conditions.
+      m=[1,1,1];y=[.97000436,-.24308753,-.97000436,.24308753,0,0,.466203685,.43236573,.466203685,.43236573,-.93240737,-.86473146];
+      title='8자 궤도';description='세 물체가 같은 8자를 따라가는 주기궤도. 출판된 반올림 초기값이므로 완벽한 폐곡선은 아닙니다.';period=6.32591398;
+    }else if(id==='equilateral'){
+      m=[1,1,1];y=new Array(12).fill(0);const w=3**(-.25);
+      for(let i=0;i<3;i++){const a=2*Math.PI*i/3;y[2*i]=Math.cos(a);y[2*i+1]=Math.sin(a);y[6+2*i]=-w*Math.sin(a);y[7+2*i]=w*Math.cos(a);}
+      title='정삼각형 회전';description='정확한 원운동 해와 직접 비교하는 기준시험. 작은 오차나 섭동에도 대칭은 깨질 수 있습니다.';period=2*Math.PI/w;
+    }else if(id==='asymmetric'){
+      m=[1,2,3];y=[-1,0,1,0,0,1,0,.3,0,-.2,-.1,0];title='이전 비대칭 예제';description='앞서 Taylor 급수로 검산한 질량 1·2·3의 동일 초기조건. 질량중심 이동도 그대로 보존합니다.';
+    }else if(id==='butterfly'){
+      const p=preset('random',19);m=p.m;y=p.y;title='민감도 실험';description='시드 19의 비대칭 초기조건. 위치를 아주 조금 바꾼 복제 궤도와, 정밀도만 높인 궤도를 나란히 검사합니다.';
+    }else if(id==='closepass'){
+      m=[1,1,1];y=[-1,0,1,0,.18,.86,.1,.28,-.15,-.22,.05,-.06];y=recenter(y,m);title='극근접 스트레스';description='매우 작은 근접 거리에서 수치 오차가 증폭되는 스트레스 시험. 궤도 차이를 곧바로 혼돈의 증거로 해석하지 마세요.';
+    }else if(id==='hierarchy'){
+      m=[1,1,.25];const R=3.8,M=2.25,vRel=Math.sqrt(M/R);const vb=-.25/M*vRel,vo=2/M*vRel;
+      y=[-.5,-.25/M*R,.5,-.25/M*R,0,2/M*R,.25/M*vRel,-Math.sqrt(.5),.25/M*vRel,Math.sqrt(.5),-2/M*vRel,0];
+      title='쌍성 + 바깥 천체';description='가까운 쌍성과 바깥 동반성. 서로 다른 운동 시간척도를 비교하는 초기조건이며 정확한 원궤도 해는 아닙니다.';
+    }else if(id==='random'){
+      const rng=mulberry32(seed>>>0);m=[.5+rng(),.5+rng(),.5+rng()];y=new Array(12).fill(0);
+      for(let i=0;i<3;i++){const a=2*Math.PI*i/3+(rng()-.5)*.5,r=.75+rng()*.5;y[2*i]=r*Math.cos(a);y[2*i+1]=r*Math.sin(a);y[6+2*i]=(rng()-.5)*.7;y[7+2*i]=(rng()-.5)*.7;}
+      y=recenter(y,m);title='시드 랜덤';description='시드 '+(seed>>>0)+'로 재현 가능한 초기조건. 같은 시드와 설정이면 같은 계산을 반복합니다.';
+    }else throw new SolverError('INPUT','알 수 없는 프리셋입니다.');
+    return {id,title,description,y:Array.from(y),m,period,seed:seed>>>0};
+  }
+  function exactEquilateral(t){const y=new Float64Array(12),w=3**(-.25);for(let i=0;i<3;i++){const a=2*Math.PI*i/3+w*t;y[2*i]=Math.cos(a);y[2*i+1]=Math.sin(a);y[6+2*i]=-w*Math.sin(a);y[7+2*i]=w*Math.cos(a);}return y;}
+  function run(y,m,o,T){const s=new Simulator(y,m,o);s.advanceTo(T);return s;}
+  const API={VERSION,DEFAULTS,PAIRS,SolverError,validate,copy,minDistance,center,recenter,rhs,diagnostics,encounterTime,Simulator,rmsDifference,relativeStateDifference,perturb,preset,exactEquilateral,taylorPolynomial,run,mulberry32};
+  if(typeof module!=='undefined'&&module.exports)module.exports=API;
+  root.ThreeBodyPhysics=API;
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script><script id="experiment-source">/* Experiments use the identical engine embedded in the simulator.
+ * Refined RK45 is a numerical reference, never an exact oracle.
+ * All trials begin at t=0, and aborts are retained instead of hidden.
+ */
+(function(root){
+  'use strict';
+  const P=root.ThreeBodyPhysics||(typeof require==='function'?require('./physics.js'):null);
+  const fmt=(x)=>Number.isFinite(x)?(Math.abs(x)<1e-99?'0':x.toExponential(3)):'—';
+  const methods=[['leapfrog',.02,'Leapfrog · Δt .02'],['leapfrog',.01,'Leapfrog · Δt .01'],['rk4',.02,'RK4 · Δt .02'],['rk4',.01,'RK4 · Δt .01'],['rk45',1e-8,'RK45 · tol 1e-8'],['rk45',1e-10,'RK45 · tol 1e-10'],['taylor',1e-10,'Taylor 16 · tol 1e-10']];
+  function one(y,m,o,T){
+    const start=performance.now();let s;
+    try{s=new P.Simulator(y,m,o);s.advanceTo(T);return {sim:s,ok:true,ms:performance.now()-start};}
+    catch(e){return {sim:s,ok:false,error:e.message,code:e.code,ms:performance.now()-start};}
+  }
+  function reference(y,m,o,T){return one(y,m,{...o,method:'rk45',rtol:1e-12,atol:1e-14,maxStep:.01,dt:.001},T);}
+  function report(kind,title,columns,rows,note,extra={}){return {kind,title,columns,rows,note,createdAt:new Date().toISOString(),...extra};}
+  function compare(data,emit){
+    const {y,m,options,T}=data,ref=reference(y,m,options,T);
+    if(!ref.ok)throw new Error('고정밀 기준 계산도 중단되었습니다: '+ref.error);
+    const rows=[],raw=[];
+    for(let i=0;i<methods.length;i++){
+      const [method,h,label]=methods[i],adaptive=method==='rk45'||method==='taylor';
+      emit({progress:(i+1)/8,label:label+' 계산 중'});
+      const o={...options,method,dt:adaptive?.002:h,maxStep:adaptive?.02:h,rtol:adaptive?h:1e-10,atol:adaptive?h*.01:1e-12};
+      const a=one(y,m,o,T);const diff=a.ok?P.rmsDifference(a.sim.y,ref.sim.y,true):NaN;
+      rows.push([label,a.ok?fmt(diff):'중단',a.sim?fmt(a.sim.stats.maxEnergyError):'—',a.sim?String(a.sim.stats.steps):'—',a.ms.toFixed(1),a.ok?'완료':a.code]);
+      raw.push({method,label,options:o,ok:a.ok,error:a.error,positionRMS:diff,stats:a.sim?.stats,ms:a.ms,finalTime:a.sim?.t});
+    }
+    const a=raw[0],b=raw[1],c=raw[2],d=raw[3];
+    let note='기준은 RK45(rtol=1e-12, atol=1e-14, hmax=.01)입니다. 기준과의 차이는 엄밀한 실제 오차 상한이 아닙니다. 에너지 값은 적분 스텝에서 관측한 최대값입니다. CPU 시간은 기기·브라우저에 따라 달라집니다.';
+    if(a.ok&&b.ok)note+=' Leapfrog 간격 절반의 위치 차이 감소비: '+(a.positionRMS/b.positionRMS).toFixed(2)+'배.';
+    if(c.ok&&d.ok)note+=' RK4 감소비: '+(c.positionRMS/d.positionRMS).toFixed(2)+'배.';
+    return report('compare','적분기 비교 · T='+T,['방법','위치 RMS 차이','max |ΔE / E*|','스텝','시간 ms','상태'],rows,note,{raw,reference:{options:ref.sim.o,stats:ref.sim.stats},input:data});
+  }
+  function reversal(data,emit){
+    const {y,m,options,T}=data,rows=[],raw=[];
+    for(let i=0;i<methods.length;i++){
+      const [method,h,label]=methods[i],adaptive=method==='rk45'||method==='taylor';emit({progress:i/methods.length,label:label+' 왕복 계산'});
+      const o={...options,method,dt:adaptive?.002:h,maxStep:adaptive?.02:h,rtol:adaptive?h:1e-10,atol:adaptive?h*.01:1e-12};
+      const a=one(y,m,o,T);
+      if(!a.ok){rows.push([label,'중단','—',a.code]);continue;}
+      const rev=P.copy(a.sim.y);for(let k=6;k<12;k++)rev[k]*=-1;
+      const b=one(rev,m,o,T);let err=NaN;
+      if(b.ok){for(let k=6;k<12;k++)b.sim.y[k]*=-1;err=P.rmsDifference(b.sim.y,y);}
+      rows.push([label,b.ok?fmt(err):'중단',String(a.sim.stats.steps+(b.sim?.stats.steps||0)),b.ok?'완료':b.code]);raw.push({method,ok:b.ok,returnStateRMS:err});
+    }
+    return report('reversal','시간 반전 · '+T+' + '+T,['방법','복귀 상태 RMS','총 스텝','상태'],rows,'T까지 진행 → 모든 속도 반전 → 다시 T만큼 진행 → 속도를 원래 방향으로 비교합니다. 위치와 속도를 함께 비교하는 무차원 RMS입니다. 잘 되돌아와도 궤도 자체가 정확하다는 보장은 아닙니다. 마지막 잔여 스텝과 적응형 시간 분할도 결과에 영향을 줍니다.',{raw,input:data});
+  }
+  function sensitivity(data,emit){
+    const {y,m,options,T}=data,delta=data.delta||1e-6;
+    const o={...options,method:'rk45',rtol:1e-11,atol:1e-13,maxStep:.02,dt:.002};
+    const hi={...o,rtol:1e-12,atol:1e-14,maxStep:.01};
+    const a=new P.Simulator(y,m,o),b=new P.Simulator(P.perturb(y,m,delta),m,o),c=new P.Simulator(y,m,hi),d=new P.Simulator(P.perturb(y,m,delta),m,hi);
+    const initial=P.rmsDifference(a.y,b.y,true),rows=[],series=[];
+    for(let k=1;k<=100;k++){
+      const t=T*k/100;a.advanceTo(t);b.advanceTo(t);c.advanceTo(t);d.advanceTo(t);
+      const separation=P.rmsDifference(a.y,b.y,true),hiSep=P.rmsDifference(c.y,d.y,true);
+      const baselineDiff=P.rmsDifference(a.y,c.y,true),perturbedDiff=P.rmsDifference(b.y,d.y,true),numerical=Math.max(baselineDiff,perturbedDiff);
+      series.push({t,separation,hiSeparation:hiSep,numerical});
+      if(k%20===0)rows.push([t.toFixed(2),fmt(separation),fmt(hiSep),fmt(numerical),fmt(separation/Math.max(numerical,1e-300))]);
+      if(k%10===0)emit({progress:k/100,label:'미세 섭동 + 정밀도 교차검사 · t='+t.toFixed(2)});
+    }
+    const last=series[series.length-1];
+    return report('sensitivity','초기조건 민감도 · δ='+fmt(delta),['시간','섭동 위치 차이','고정밀 섭동 차이','정밀도 간 최대 차이','섭동 / 수치 차이'],rows,'물체 A의 x를 δ만큼 이동한 뒤, 전체 질량중심이 변하지 않게 평행이동합니다. 기본·섭동 양쪽을 더 엄격한 허용오차로 재계산했습니다. 큰 분리는 이 시간 구간의 민감도를 뜻하며 양의 Lyapunov 지수나 혼돈의 수학적 증명은 아닙니다. 두 정밀도의 일치는 오차 상한도 아닙니다.',{input:data,initialSeparation:initial,growth:last.separation/initial,series});
+  }
+  function benchmark(data,emit){
+    const rows=[],checks=[];
+    const add=(name,value,limit,passed,details)=>{rows.push([name,typeof value==='number'?fmt(value):value,typeof limit==='number'?fmt(limit):limit,passed?'PASS':'FAIL']);checks.push({name,value,limit,passed,details});};
+    let i=0;const progress=label=>emit({progress:++i/10,label});
+    const e=P.preset('equilateral');
+    for(const [method,tol] of [['rk45',1e-10],['rk4',1e-10],['leapfrog',1e-10],['taylor',1e-10]]){
+      progress(method+' 정확해 대조');const s=P.run(e.y,e.m,{method,rtol:tol},2);const er=P.rmsDifference(s.y,P.exactEquilateral(2),true);const limit=method==='leapfrog'?1e-6:1e-9;add('정삼각형 · '+method,er,limit,er<limit,{stats:s.stats,T:2});
+    }
+    progress('이전 급수 예제 대조');const as=P.preset('asymmetric'),s=P.run(as.y,as.m,{method:'taylor'},.1);
+    const expected=[-.992083574684,.035348944346,.993487745792,-.014714676921,-.008297305634,.994693469832];const err=Math.max(...expected.map((x,k)=>Math.abs(x-s.y[k])));add('이전 예제 · t=.1',err,1e-11,err<1e-11,{expectedPrecision:'12 decimal places'});
+    progress('8자 궤도 귀환 대조');const p=P.preset('figure8'),f=P.run(p.y,p.m,{method:'rk45',rtol:1e-11,atol:1e-13},p.period);const fe=P.rmsDifference(f.y,p.y,true);add('8자 · 근사 주기 귀환',fe,1e-5,fe<1e-5,{period:p.period,roundedInitialConditions:true});
+    progress('힘 대칭·운동량 검사');const u=P.rhs(as.y,as.m,{...P.DEFAULTS}),force=Math.hypot(as.m.reduce((v,m,k)=>v+m*u[6+2*k],0),as.m.reduce((v,m,k)=>v+m*u[7+2*k],0));add('작용·반작용 합',force,1e-13,force<1e-13);
+    progress('충돌 안전 중단 검사');let blocked=false;try{const z=e.y.slice();z[0]=z[2];z[1]=z[3];new P.Simulator(z,e.m);}catch(x){blocked=x.code==='COLLISION';}add('초기 중첩 거부',blocked?'차단':'미차단','차단',blocked);
+    progress('고정 간격 근접 검사');let close=false;try{const z=[-.001,0,.001,0,1,0,0,0,0,0,0,0];P.run(z,[1,1,1],{method:'leapfrog',dt:.02},.02);}catch(x){close=x.code==='RESOLUTION';}add('고정 간격 부족 거부',close?'차단':'미차단','차단',close);
+    progress('연화 힘·에너지 일치');const o={...P.DEFAULTS,epsilon:.05};const soft=P.run(as.y,as.m,o,.1);const sd=soft.measure();add('연화 모델 에너지',Math.abs(sd.dE),1e-7,Math.abs(sd.dE)<1e-7);
+    const passed=checks.filter(x=>x.passed).length;
+    return report('benchmark','내장 기준시험 · '+passed+'/'+checks.length,['시험','측정값','통과 기준','결과'],rows,'독립적인 정확해, 앞선 12자리 급수 결과, 근사 주기 귀환, 입력·근접 안전장치를 검사합니다. PASS는 이 시험 범위의 통과이며 모든 초기조건·모든 시간에서의 정확성 보증은 아닙니다. 소프트닝은 기본값 0이며 마지막 시험에서만 .05를 사용합니다.',{checks,passed,total:checks.length});
+  }
+  function execute(kind,data,emit=()=>{}){
+    if(kind!=='benchmark'){
+      if(!Number.isFinite(data.T)||data.T<.01||data.T>60)throw new Error('실험 시간은 .01~60 범위여야 합니다.');
+      P.validate(data.y,data.m,{...P.DEFAULTS,...data.options});
+    }
+    if(kind==='compare')return compare(data,emit);
+    if(kind==='reversal')return reversal(data,emit);
+    if(kind==='sensitivity')return sensitivity(data,emit);
+    if(kind==='benchmark')return benchmark(data,emit);
+    throw new Error('알 수 없는 실험입니다.');
+  }
+  root.ThreeBodyExperiments={execute,one};
+  if(typeof module!=='undefined'&&module.exports)module.exports=root.ThreeBodyExperiments;
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script><script id="app-source">/* Browser interface. No network, no external assets, no storage permission. */
+(function(){
+  'use strict';
+  const P=ThreeBodyPhysics,$=id=>document.getElementById(id),all=s=>Array.from(document.querySelectorAll(s));
+  const COLORS=['#63e1da','#ff907e','#f0ca75'],NAMES=['A','B','C'],SAMPLE=.02,CAPACITY=6000;
+  let sim,ghostSim=null,presetInfo,initialY,initialM,draftY,draftM,selected=0,dirty=false;
+  let playing=true,singleStep=false,accumulator=0,pendingTarget=null,sampleIndex=0,displayY,displayGhost=null,displayD=null;
+  let records=new Array(CAPACITY),count=0,head=0,frameCount=0,prevTime=0,metricTime=0,fpsEpoch=0,fpsFrames=0,fps=60;
+  let worker=null,workerUrl=null,reports=[],toastTimer=null,stopFlag=false,activeModal=null,returnFocus=null;
+  const camera={x:0,y:0,scale:170,auto:true},view={w:600,h:600,dpr:1},canvas=$('universe'),ctx=canvas.getContext('2d');
+  let pointer=null,hoverBody=-1;
+  function numberString(x){if(!Number.isFinite(x))return '—';if(x===0)return '0';return Math.abs(x)<.001||Math.abs(x)>=1e4?x.toExponential(2):x.toFixed(4);}
+  function sci(x){return Number.isFinite(x)?(x===0?'0':x.toExponential(2)):'—';}
+  function short(x){return Number.isFinite(x)?String(Number(x.toPrecision(13))):'';}
+  function notify(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),4500);}
+  function modal(id){if(activeModal)closeModal();activeModal=id;returnFocus=document.activeElement;$(id).classList.add('open');$(id).querySelector('button')?.focus();}
+  function closeModal(){if(activeModal){$(activeModal).classList.remove('open');activeModal=null;returnFocus?.focus();}}
+  function recordAt(i){return records[(head-count+i+CAPACITY)%CAPACITY];}
+  function history(){return Array.from({length:count},(_,i)=>recordAt(i));}
+  function capture(){
+    displayY=P.copy(sim.y);displayGhost=ghostSim?P.copy(ghostSim.y):null;displayD=sim.measure();
+    const r={t:sim.t,y:Array.from(displayY),ghost:displayGhost?Array.from(displayGhost):null,d:{...displayD},h:sim.stats.lastH,steps:sim.stats.steps,
+      separation:displayGhost?P.rmsDifference(displayY,displayGhost,true):null};
+    records[head]=r;head=(head+1)%CAPACITY;count=Math.min(CAPACITY,count+1);
+  }
+  function clearHistory(){records=new Array(CAPACITY);count=0;head=0;sampleIndex=0;accumulator=0;pendingTarget=null;}
+  function currentOptions(){const method=$('method').value,rtol=Number($('tolerance').value),dt=Number($('dt').value);return {...P.DEFAULTS,method,rtol,atol:rtol/100,dt,maxStep:(method==='rk4'||method==='leapfrog')?dt:.02,epsilon:Number($('epsilon').value)};}
+  function updateMethodControls(){const adaptive=$('method').value==='rk45'||$('method').value==='taylor';$('tolerance').disabled=!adaptive;$('dt').disabled=adaptive;}
+  function markDirty(){dirty=true;$('apply').disabled=false;$('dirty').classList.add('on');}
+  function clearDirty(){dirty=false;$('apply').disabled=true;$('dirty').classList.remove('on');}
+  function syncEditor(){
+    $('mass').value=short(draftM[selected]);$('posx').value=short(draftY[2*selected]);$('posy').value=short(draftY[2*selected+1]);$('velx').value=short(draftY[6+2*selected]);$('vely').value=short(draftY[7+2*selected]);
+    all('[data-body]').forEach(b=>b.classList.toggle('active',Number(b.dataset.body)===selected));
+  }
+  function setPlaying(v){playing=!!v&&!stopFlag;singleStep=false;accumulator=0;$('play').textContent=playing?'Ⅱ 일시정지':'▷ 재생';$('step').disabled=playing||stopFlag;$('play').disabled=stopFlag;updateReadouts();}
+  function reset(keepPlaying=playing,options=null){
+    try{
+      const o=options||sim?.o||currentOptions();
+      const next=new P.Simulator(initialY,initialM,o);
+      const nextGhost=$('ghost').checked?new P.Simulator(P.perturb(initialY,initialM,Number($('delta').value)),initialM,o):null;
+      sim=next;ghostSim=nextGhost;stopFlag=false;clearHistory();capture();$('view-message').classList.remove('visible');
+      $('ghost-legend').hidden=!ghostSim;setPlaying(keepPlaying);updateReadouts();drawCharts();
+    }catch(e){notify(e.message);return false;}return true;
+  }
+  function updateScenario(){
+    $('scenario-title').textContent=presetInfo.title;$('scenario-desc').textContent=presetInfo.description;
+    $('period-info').textContent=presetInfo.period?'T ≈ '+presetInfo.period.toFixed(6):'G = 1 · 단위 없음';
+    all('[data-preset]').forEach(b=>b.classList.toggle('active',b.dataset.preset===presetInfo.id));
+  }
+  function loadPreset(id){
+    if(worker)cancelExperiment();
+    try{
+      const seed=Number($('seed').value);if(!Number.isInteger(seed)||seed<0||seed>4294967295)throw new Error('시드는 0~4294967295의 정수여야 합니다.');
+      presetInfo=P.preset(id,seed);initialY=P.copy(presetInfo.y);initialM=P.copy(presetInfo.m);draftY=P.copy(initialY);draftM=P.copy(initialM);
+      if(id==='butterfly')$('ghost').checked=true;
+      clearDirty();syncEditor();updateScenario();reset(true,currentOptions());fitCamera(true);
+    }catch(e){notify(e.message);}
+  }
+  function applyDraft(){
+    try{
+      const o=currentOptions();P.validate(draftY,draftM,o);
+      initialY=P.copy(draftY);initialM=P.copy(draftM);
+      presetInfo={id:'custom',title:'사용자 초기조건',description:'직접 편집한 시작 상태입니다. 내장 기준시험과 별도로 적분기 비교·시간 반전·민감도 실험을 실행해 보세요.',period:null};
+      updateScenario();clearDirty();reset(false,o);fitCamera(true);notify('새 초기조건을 적용했습니다. t = 0에서 재생하세요.');
+    }catch(e){notify(e.message);}
+  }
+  function stopped(error){
+    stopFlag=true;playing=false;singleStep=false;accumulator=0;displayY=P.copy(sim.y);displayD=sim.measure();displayGhost=null;
+    $('view-message').textContent='계산 중단 · '+error.message;$('view-message').classList.add('visible');setPlaying(false);
+    $('quality').textContent='안전 중단 · 초기조건이나 계산 설정을 바꾸고 다시 시작하세요.';$('quality').classList.add('warn');
+  }
+  function advanceBudget(ms=8){
+    const start=performance.now();let loops=0;
+    while((playing||singleStep)&&!stopFlag&&(accumulator>=SAMPLE||pendingTarget!==null||singleStep)){
+      if(pendingTarget===null)pendingTarget=(sampleIndex+1)*SAMPLE;
+      try{
+        if(sim.t<pendingTarget-1e-14)sim.stepTo(pendingTarget);
+        else if(ghostSim&&ghostSim.t<pendingTarget-1e-14)ghostSim.stepTo(pendingTarget);
+        else{
+          sim.t=pendingTarget;if(ghostSim)ghostSim.t=pendingTarget;capture();sampleIndex++;pendingTarget=null;accumulator=Math.max(0,accumulator-SAMPLE);
+          if(singleStep){singleStep=false;break;}
+        }
+      }catch(e){stopped(e);break;}
+      if(++loops>30000||performance.now()-start>ms)break;
+    }
+  }
+  function updateReadouts(){
+    if(!sim||!displayD)return;
+    const d=displayD,t=count?recordAt(count-1).t:sim.t;
+    $('time').textContent=(stopFlag?sim.t:t).toFixed(3);
+    $('energy').textContent=sci(Math.abs(d.dE));$('max-energy').textContent=sci(sim.stats.maxEnergyError);
+    $('angular').textContent=sci(Math.abs(d.dL));$('momentum').textContent=sci(d.dP);$('com-error').textContent=sci(d.comError);
+    $('distance').textContent=numberString(d.minR);$('last-h').textContent=sim.stats.lastH?sci(sim.stats.lastH):'—';
+    $('separation').textContent=displayGhost?sci(P.rmsDifference(displayY,displayGhost,true)):($('ghost').checked&&stopFlag?'비교 중단':'꺼짐');
+    $('run-status').textContent=(stopFlag?'STOPPED':playing?'RUNNING':'PAUSED')+' · '+sim.o.method.toUpperCase()+(sim.o.epsilon>0?' · ε='+sim.o.epsilon:'');
+    $('step-status').textContent=sim.stats.steps.toLocaleString()+' STEPS / '+sim.stats.rejected+' REJECT';$('fps-status').textContent=Math.round(fps)+' FPS';
+    if(!stopFlag){
+      const warn=sim.stats.maxEnergyError>1e-6;$('quality').classList.toggle('warn',warn);
+      $('quality').textContent=warn?'에너지 변화가 큽니다. 정밀도를 높이고 적분기 비교를 확인하세요.':sim.o.epsilon>0?'연화된 중력 모델입니다. 원래 뉴턴 중력과 다른 방정식입니다.':'에너지 보존만으로 궤도 정확성을 판단하지 않습니다.';
+    }
+  }
+  function resize(){
+    const r=$('viewport').getBoundingClientRect();view.w=r.width;view.h=r.height;view.dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(view.w*view.dpr);canvas.height=Math.round(view.h*view.dpr);ctx.setTransform(view.dpr,0,0,view.dpr,0,0);drawCharts();
+  }
+  function screen(x,y){return [(x-camera.x)*camera.scale+view.w/2,view.h*.56-(y-camera.y)*camera.scale];}
+  function world(x,y){return [(x-view.w/2)/camera.scale+camera.x,(view.h*.56-y)/camera.scale+camera.y];}
+  function fitCamera(immediate=false){
+    if(!displayY)return;
+    let xmin=Infinity,xmax=-Infinity,ymin=Infinity,ymax=-Infinity;
+    const add=y=>{if(!y)return;for(let k=0;k<6;k+=2){xmin=Math.min(xmin,y[k]);xmax=Math.max(xmax,y[k]);ymin=Math.min(ymin,y[k+1]);ymax=Math.max(ymax,y[k+1]);}};
+    add(displayY);add(displayGhost);
+    const length=Number($('trail').value),t=sim?.t||0;
+    for(let i=Math.max(0,count-Math.ceil(length/SAMPLE));i<count;i+=4){const r=recordAt(i);if(r.t>=t-length){add(r.y);add(r.ghost);}}
+    const cx=(xmin+xmax)/2,cy=(ymin+ymax)/2;
+    const scale=Math.min(Math.max(80,view.w-92)/Math.max(2.9,(xmax-xmin)*1.22),Math.max(100,view.h-225)/Math.max(2,(ymax-ymin)*1.28));
+    const f=immediate?1:.045;camera.x+=(cx-camera.x)*f;camera.y+=(cy-camera.y)*f;camera.scale+=(Math.max(.00001,Math.min(1e5,scale))-camera.scale)*f;
+    if(immediate){camera.auto=true;$('fit').classList.add('active');}
+  }
+  function niceStep(raw){const base=10**Math.floor(Math.log10(raw)),x=raw/base;return (x<2?2:x<5?5:10)*base;}
+  function drawGrid(){
+    if(!$('grid').checked)return;
+    const spacing=niceStep(65/camera.scale),lo=world(0,view.h),hi=world(view.w,0);
+    ctx.lineWidth=1;ctx.strokeStyle='#172635';ctx.beginPath();
+    let n=0;for(let x=Math.floor(lo[0]/spacing)*spacing;x<=hi[0]&&n++<100;x+=spacing){const sx=screen(x,0)[0];ctx.moveTo(sx,0);ctx.lineTo(sx,view.h);}
+    n=0;for(let y=Math.floor(lo[1]/spacing)*spacing;y<=hi[1]&&n++<100;y+=spacing){const sy=screen(0,y)[1];ctx.moveTo(0,sy);ctx.lineTo(view.w,sy);}ctx.stroke();
+    const origin=screen(0,0);ctx.strokeStyle='#233a4b';ctx.setLineDash([3,5]);ctx.beginPath();ctx.moveTo(origin[0],0);ctx.lineTo(origin[0],view.h);ctx.moveTo(0,origin[1]);ctx.lineTo(view.w,origin[1]);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#47657b';ctx.font='9px '+getComputedStyle(document.documentElement).getPropertyValue('--mono');
+    const bar=spacing*camera.scale;ctx.fillText(short(spacing)+' units',22,view.h-52);ctx.strokeStyle='#56748a';ctx.beginPath();ctx.moveTo(22,view.h-63);ctx.lineTo(22+bar,view.h-63);ctx.moveTo(22,view.h-66);ctx.lineTo(22,view.h-60);ctx.moveTo(22+bar,view.h-66);ctx.lineTo(22+bar,view.h-60);ctx.stroke();
+  }
+  function pathBody(body,isGhost=false){
+    const t=sim.t,length=Number($('trail').value),start=Math.max(0,count-Math.ceil(length/SAMPLE));
+    const available=count-start;if(available<2)return;
+    ctx.strokeStyle=COLORS[body];ctx.lineWidth=isGhost?1:1.8;ctx.setLineDash(isGhost?[4,6]:[]);
+    const groups=8;
+    for(let g=0;g<groups;g++){
+      const a=start+Math.floor(available*g/groups),b=Math.min(count-1,start+Math.ceil(available*(g+1)/groups));
+      ctx.globalAlpha=(isGhost?.48:.85)*(.12+.88*(g+1)/groups);ctx.beginPath();let prev=null;
+      for(let i=a;i<=b;i++){
+        const r=recordAt(i),y=isGhost?r.ghost:r.y;if(!y||r.t<t-length){prev=null;continue;}
+        const p=screen(y[body*2],y[body*2+1]);
+        if(!prev)ctx.moveTo(p[0],p[1]);else ctx.lineTo(p[0],p[1]);prev=p;
+      }ctx.stroke();
+    }
+    ctx.globalAlpha=1;ctx.setLineDash([]);
+  }
+  function arrow(a,b,color){
+    const dx=b[0]-a[0],dy=b[1]-a[1],ang=Math.atan2(dy,dx);if(Math.hypot(dx,dy)<2)return;
+    ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();ctx.beginPath();ctx.moveTo(...b);ctx.lineTo(b[0]-6*Math.cos(ang-.4),b[1]-6*Math.sin(ang-.4));ctx.lineTo(b[0]-6*Math.cos(ang+.4),b[1]-6*Math.sin(ang+.4));ctx.closePath();ctx.fill();
+  }
+  function draw(){
+    if(!displayY)return;
+    if(camera.auto&&!pointer)fitCamera();
+    ctx.setTransform(view.dpr,0,0,view.dpr,0,0);ctx.clearRect(0,0,view.w,view.h);ctx.fillStyle='#090f18';ctx.fillRect(0,0,view.w,view.h);
+    const glow=ctx.createRadialGradient(view.w*.5,view.h*.58,0,view.w*.5,view.h*.58,Math.max(view.w,view.h)*.6);glow.addColorStop(0,'#14223877');glow.addColorStop(1,'#0a101800');ctx.fillStyle=glow;ctx.fillRect(0,0,view.w,view.h);drawGrid();
+    for(let b=0;b<3;b++){pathBody(b);if(displayGhost)pathBody(b,true);}
+    if($('triangle').checked){ctx.strokeStyle='#8096ad44';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<3;i++){const p=screen(displayY[2*i],displayY[2*i+1]);if(i===0)ctx.moveTo(...p);else ctx.lineTo(...p);}ctx.closePath();ctx.stroke();}
+    if(displayGhost){
+      ctx.lineWidth=1.4;ctx.globalAlpha=.65;
+      for(let i=0;i<3;i++){const p=screen(displayGhost[2*i],displayGhost[2*i+1]);ctx.strokeStyle=COLORS[i];ctx.beginPath();ctx.arc(p[0],p[1],7,0,Math.PI*2);ctx.stroke();}
+      ctx.globalAlpha=1;
+    }
+    if($('barycenter').checked){
+      const c=P.center(displayY,initialM),p=screen(c.x,c.y);ctx.strokeStyle='#8cabc27a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p[0]-5,p[1]);ctx.lineTo(p[0]+5,p[1]);ctx.moveTo(p[0],p[1]-5);ctx.lineTo(p[0],p[1]+5);ctx.stroke();
+    }
+    for(let i=0;i<3;i++){
+      const p=screen(displayY[2*i],displayY[2*i+1]),radius=Math.min(13,Math.max(4,5.7*Math.cbrt(initialM[i])));
+      if(p[0]<-100||p[0]>view.w+100||p[1]<-100||p[1]>view.h+100)continue;
+      if($('vectors').checked||pointer?.mode==='velocity'){const end=screen(displayY[2*i]+displayY[6+2*i]*.35,displayY[2*i+1]+displayY[7+2*i]*.35);arrow(p,end,COLORS[i]+'90');}
+      const g=ctx.createRadialGradient(p[0],p[1],radius*.2,p[0],p[1],radius*4);g.addColorStop(0,COLORS[i]+'50');g.addColorStop(1,COLORS[i]+'00');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p[0],p[1],radius*4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=COLORS[i];ctx.beginPath();ctx.arc(p[0],p[1],radius,0,Math.PI*2);ctx.fill();ctx.fillStyle='#ffffffbb';ctx.beginPath();ctx.arc(p[0]-radius*.22,p[1]-radius*.26,radius*.25,0,Math.PI*2);ctx.fill();
+      if((hoverBody===i&&!playing)||pointer?.body===i){ctx.strokeStyle=COLORS[i]+'aa';ctx.beginPath();ctx.arc(p[0],p[1],radius+5,0,Math.PI*2);ctx.stroke();}
+      ctx.fillStyle=COLORS[i];ctx.font='10px ui-monospace, monospace';ctx.fillText(NAMES[i],p[0]+radius+7,p[1]-radius-5);
+    }
+  }
+  function lineChart(target,data,field,color,customRange=null){
+    const c=typeof target==='string'?$(target):target,r=c.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
+    if(r.width<5||r.height<5)return;c.width=Math.round(r.width*dpr);c.height=Math.round(r.height*dpr);const g=c.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);
+    const w=r.width,h=r.height,left=30,right=7,top=9,bottom=10;
+    let vals=data.map(row=>Math.log10(Math.max(1e-16,Math.abs(field(row))))).filter(Number.isFinite);
+    let low=-16,high=-5;
+    if(customRange){[low,high]=customRange;}else if(vals.length){low=Math.min(-12,Math.floor(Math.min(...vals)));high=Math.max(low+3,Math.ceil(Math.max(...vals))+1);low=Math.max(-16,low);}
+    g.font='9px ui-monospace, monospace';g.fillStyle='#59758c';g.lineWidth=1;
+    for(let k=0;k<4;k++){const yy=top+(h-top-bottom)*k/3;g.strokeStyle='#253847';g.beginPath();g.moveTo(left,yy);g.lineTo(w-right,yy);g.stroke();g.fillText(String(Math.round(high-(high-low)*k/3)),0,yy+3);}
+    if(data.length<2)return;
+    const t0=data[0].t,t1=data[data.length-1].t;g.strokeStyle=color;g.lineWidth=1.5;g.beginPath();let begun=false;
+    for(let i=0;i<data.length;i++){
+      const val=field(data[i]);if(!Number.isFinite(val)){begun=false;continue;}
+      const log=Math.log10(Math.max(1e-16,Math.abs(val))),x=left+(data[i].t-t0)/Math.max(1e-12,t1-t0)*(w-left-right),yy=top+(high-log)/(high-low)*(h-top-bottom);
+      if(!begun){g.moveTo(x,Math.min(h-bottom,Math.max(top,yy)));begun=true;}else g.lineTo(x,Math.min(h-bottom,Math.max(top,yy)));
+    }g.stroke();
+  }
+  function drawCharts(){
+    if(!count)return;
+    let data=history();const stride=Math.max(1,Math.floor(data.length/280));data=data.filter((r,i)=>i%stride===0||i===count-1);
+    lineChart('energy-chart',data,r=>r.d.dE,COLORS[0]);$('chart-from').textContent='t '+data[0].t.toFixed(1);$('chart-to').textContent=data[data.length-1].t.toFixed(1);
+  }
+  function download(name,text,mime='application/json'){
+    const url=URL.createObjectURL(new Blob([text],{type:mime})),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
+  }
+  function config(){return {schema:'three-body-lab.initial.v1',version:P.VERSION,savedAt:new Date().toISOString(),note:'Initial conditions only. Not a playback checkpoint.',preset:{id:presetInfo.id,title:presetInfo.title,period:presetInfo.period},y:Array.from(initialY),m:Array.from(initialM),options:{...sim.o},seed:Number($('seed').value),comparison:{enabled:$('ghost').checked,delta:Number($('delta').value)}};}
+  function save(){download('three-body-initial-'+presetInfo.id+'.json',JSON.stringify(config(),null,2));if(dirty)notify('아직 적용하지 않은 편집은 제외하고, 적용된 초기조건을 저장했습니다.');}
+  function csv(){
+    const rows=[['t','xA','yA','xB','yB','xC','yC','vxA','vyA','vxB','vyB','vxC','vyC','energy','normalized_energy_change','angular_momentum','momentum_change','com_error','min_distance','last_step','position_separation','method','epsilon','G','mA','mB','mC'].join(',')];
+    for(const r of history())rows.push([r.t,...r.y,r.d.E,r.d.dE,r.d.L,r.d.dP,r.d.comError,r.d.minR,r.h,r.separation??'',sim.o.method,sim.o.epsilon,sim.o.G,...initialM].join(','));
+    download('three-body-observations.csv','\uFEFF'+rows.join('\n'),'text/csv;charset=utf-8');notify('최근 '+count+'개의 관측점을 저장했습니다. 적분 내부의 모든 스텝을 저장한 파일은 아닙니다.');
+  }
+  function setSelectValue(id,value){const el=$(id),str=String(value);let found=Array.from(el.options).find(o=>Number(o.value)===Number(value));if(!found){const op=document.createElement('option');op.value=str;op.textContent=str;el.appendChild(op);found=op;}el.value=found.value;}
+  function loadConfig(obj){
+    if(obj?.schema!=='three-body-lab.initial.v1')throw new Error('이 실험실에서 저장한 초기조건 JSON이 아닙니다.');
+    const keys=Object.keys(P.DEFAULTS),o={...P.DEFAULTS};for(const k of keys)if(obj.options&&Object.hasOwn(obj.options,k))o[k]=obj.options[k];
+    if(o.atol!==o.rtol/100||o.maxStep!==((o.method==='rk4'||o.method==='leapfrog')?o.dt:.02))throw new Error('이 UI가 표시할 수 없는 허용오차·최대 간격 조합입니다.');
+    if(o.G!==1||o.stopRadius!==P.DEFAULTS.stopRadius||o.minStep!==P.DEFAULTS.minStep||o.encounterFactor!==P.DEFAULTS.encounterFactor||o.guardFixed!==true)throw new Error('이 UI는 G=1 및 기본 안전 한계의 설정만 불러옵니다.');
+    P.validate(obj.y,obj.m,o);
+    if(!Number.isInteger(obj.seed)||obj.seed<0||obj.seed>4294967295)throw new Error('시드 값이 올바르지 않습니다.');
+    const cmp=obj.comparison||{enabled:false,delta:1e-6};if(typeof cmp.enabled!=='boolean'||!Number.isFinite(cmp.delta)||cmp.delta<1e-12||cmp.delta>.1)throw new Error('섭동 설정이 올바르지 않습니다.');
+    const candidate=new P.Simulator(obj.y,obj.m,o);
+    if(cmp.enabled)new P.Simulator(P.perturb(obj.y,obj.m,cmp.delta),obj.m,o);
+    if(worker)cancelExperiment();
+    initialY=P.copy(obj.y);initialM=P.copy(obj.m);draftY=P.copy(initialY);draftM=P.copy(initialM);sim=candidate;
+    // Imported titles are text only; never executable HTML. An imported file
+    // is treated as custom, so it cannot falsely claim an exact preset period.
+    presetInfo={id:'imported',title:'불러온 초기조건',description:'JSON에 저장된 시작 상태와 적분 설정입니다. 저장 시점의 재생 시간이나 궤적은 포함하지 않습니다.',period:null};
+    $('method').value=o.method;setSelectValue('tolerance',o.rtol);setSelectValue('dt',o.dt);setSelectValue('epsilon',o.epsilon);$('seed').value=obj.seed;$('ghost').checked=cmp.enabled;setSelectValue('delta',cmp.delta);
+    updateMethodControls();clearDirty();syncEditor();updateScenario();reset(false,o);fitCamera(true);notify('초기조건을 불러왔습니다. t = 0부터 재현합니다.');
+  }
+  function setExperimentUI(busy){all('[data-experiment]').forEach(b=>b.disabled=busy);$('progress-area').classList.toggle('visible',busy);$('progress-fill').style.width='0%';}
+  function cleanupWorker(){if(worker)worker.terminate();worker=null;if(workerUrl)URL.revokeObjectURL(workerUrl);workerUrl=null;setExperimentUI(false);}
+  function cancelExperiment(){cleanupWorker();notify('실험 계산을 중단했습니다. 원본 초기조건과 궤도는 그대로입니다.');}
+  function experiment(kind){
+    if(worker)return;if(dirty){notify('변경사항을 먼저 적용하세요. 실험은 적용된 초기조건부터 시작합니다.');return;}
+    const T=Number($('experiment-time').value);if(kind!=='benchmark'&&(!Number.isFinite(T)||T<.01||T>60)){notify('실험 시간 T는 .01~60 범위여야 합니다.');return;}
+    setPlaying(false);setExperimentUI(true);$('progress-label').textContent='별도 계산 상태를 준비합니다';
+    const input={y:Array.from(initialY),m:Array.from(initialM),options:{...sim.o},T,delta:Number($('delta').value)};
+    try{
+      const source=$('physics-source').textContent+'\n'+$('experiment-source').textContent+`\nonmessage=function(event){try{const result=ThreeBodyExperiments.execute(event.data.kind,event.data.input,function(update){postMessage({type:'progress',update:update});});postMessage({type:'result',result:result});}catch(error){postMessage({type:'error',message:error.message});}};`;
+      workerUrl=URL.createObjectURL(new Blob([source],{type:'text/javascript'}));worker=new Worker(workerUrl);const current=worker;
+      worker.onmessage=e=>{
+        if(worker!==current)return;
+        if(e.data.type==='progress'){$('progress-label').textContent=e.data.update.label;$('progress-fill').style.width=(Math.min(1,e.data.update.progress)*100)+'%';}
+        else if(e.data.type==='result'){const result=e.data.result;cleanupWorker();reports.unshift(result);reports=reports.slice(0,12);$('report-count').textContent='('+reports.length+')';renderReports();modal('reports-modal');notify('실험을 완료했습니다. 결과와 중단 여부를 함께 기록했습니다.');}
+        else {const msg=e.data.message;cleanupWorker();notify('실험 중단: '+msg);}
+      };
+      worker.onerror=e=>{if(worker!==current)return;cleanupWorker();notify('실험 작업자를 실행하지 못했습니다: '+(e.message||'이 브라우저의 로컬 Worker 제한'));};
+      worker.postMessage({kind,input});
+    }catch(e){cleanupWorker();notify('별도 계산 실행 실패: '+e.message);}
+  }
+  function renderReports(){
+    const el=$('report-body');el.replaceChildren();
+    if(!reports.length){const p=document.createElement('div');p.className='empty';p.textContent='아직 실행한 실험이 없습니다.\n오른쪽의 기준시험·적분기 비교·시간 반전·민감도 검증을 실행하세요.';el.appendChild(p);return;}
+    reports.forEach(r=>{
+      const section=document.createElement('section');section.className='report';const h=document.createElement('h3');h.textContent=r.title;section.appendChild(h);
+      const stamp=document.createElement('div');stamp.className='stamp';stamp.textContent=new Date(r.createdAt).toLocaleString('ko-KR')+(r.input?' · INITIAL CONDITIONS / ε = '+r.input.options.epsilon:' · BUILT-IN FIXTURES');section.appendChild(stamp);
+      const scroll=document.createElement('div');scroll.className='table-scroll';const table=document.createElement('table'),thead=document.createElement('thead'),tr=document.createElement('tr');
+      r.columns.forEach(x=>{const th=document.createElement('th');th.textContent=x;tr.appendChild(th);});thead.appendChild(tr);table.appendChild(thead);const tbody=document.createElement('tbody');
+      r.rows.forEach(row=>{const tr=document.createElement('tr');row.forEach(x=>{const td=document.createElement('td');td.textContent=x;if(x==='PASS')td.className='pass';if(x==='FAIL'||x==='중단')td.className='fail';tr.appendChild(td);});tbody.appendChild(tr);});table.appendChild(tbody);scroll.appendChild(table);section.appendChild(scroll);
+      const note=document.createElement('p');note.className='note';note.textContent=r.note;section.appendChild(note);el.appendChild(section);
+      if(r.series){const p=document.createElement('p');p.className='note';p.textContent='초기 위치 차이 대비 마지막 분리: '+numberString(r.growth)+'배. 아래 그래프는 섭동 위치 차이의 log₁₀ 값입니다.';section.appendChild(p);const c=document.createElement('canvas');c.className='report-chart';section.appendChild(c);setTimeout(()=>lineChart(c,r.series,row=>row.separation,COLORS[2]),50);}
+    });
+  }
+  function hitBody(x,y){let nearest=-1,d=20;for(let i=0;i<3;i++){const p=screen(displayY[2*i],displayY[2*i+1]),dist=Math.hypot(x-p[0],y-p[1]);if(dist<d){nearest=i;d=dist;}}return nearest;}
+  function localPoint(e){const r=canvas.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];}
+  canvas.addEventListener('pointerdown',e=>{
+    if(e.button!==0)return;const [x,y]=localPoint(e),b=hitBody(x,y);camera.auto=false;$('fit').classList.remove('active');
+    if(!playing&&b!==-1&&dirty){notify('먼저 편집 중인 변경사항을 적용하세요.');return;}
+    if(!playing&&b!==-1&&!worker){pointer={mode:e.shiftKey?'velocity':'body',body:b,startX:x,startY:y,original:P.copy(displayY),moved:false};selected=b;syncEditor();}
+    else pointer={mode:'pan',startX:x,startY:y,cx:camera.x,cy:camera.y,moved:false};canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener('pointermove',e=>{
+    const [x,y]=localPoint(e),w=world(x,y);$('coords').textContent='x '+w[0].toFixed(3)+'  /  y '+w[1].toFixed(3);
+    if(!pointer){hoverBody=hitBody(x,y);canvas.style.cursor=!playing&&hoverBody>=0?'grab':'crosshair';return;}
+    pointer.moved=pointer.moved||Math.hypot(x-pointer.startX,y-pointer.startY)>2;
+    if(pointer.mode==='pan'){camera.x=pointer.cx-(x-pointer.startX)/camera.scale;camera.y=pointer.cy+(y-pointer.startY)/camera.scale;}
+    else if(pointer.mode==='body'){displayY[2*pointer.body]=w[0];displayY[2*pointer.body+1]=w[1];}
+    else{const b=pointer.body;displayY[6+2*b]=pointer.original[6+2*b]+(x-pointer.startX)/camera.scale/.35;displayY[7+2*b]=pointer.original[7+2*b]-(y-pointer.startY)/camera.scale/.35;}
+  });
+  function endPointer(e,cancel=false){
+    if(!pointer)return;const p=pointer;pointer=null;
+    if(p.mode!=='pan'&&p.moved&&!cancel){
+      try{P.validate(displayY,initialM,sim.o);initialY=P.copy(displayY);draftY=P.copy(initialY);draftM=P.copy(initialM);presetInfo={id:'custom',title:'드래그한 초기조건',description:'일시정지 시점의 전체 상태를 새로운 시작점으로 삼았습니다. 물체 크기는 실제 충돌 반지름이 아닙니다.',period:null};clearDirty();syncEditor();updateScenario();reset(false);notify('현재 상태를 새 초기조건으로 적용했습니다. t = 0으로 재설정했습니다.');}
+      catch(err){displayY=p.original;notify('편집을 적용하지 않았습니다: '+err.message);}
+    }else if(p.mode!=='pan')displayY=p.original;
+    if(e&&canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);
+  }
+  canvas.addEventListener('pointerup',e=>endPointer(e));canvas.addEventListener('pointercancel',e=>endPointer(e,true));
+  canvas.addEventListener('wheel',e=>{e.preventDefault();const [x,y]=localPoint(e),before=world(x,y);camera.auto=false;$('fit').classList.remove('active');camera.scale=Math.max(.00001,Math.min(1e5,camera.scale*Math.exp(-e.deltaY*.001)));const after=world(x,y);camera.x+=before[0]-after[0];camera.y+=before[1]-after[1];},{passive:false});
+  $('zoom-in').onclick=()=>{camera.auto=false;camera.scale=Math.min(1e5,camera.scale*1.25);$('fit').classList.remove('active');};$('zoom-out').onclick=()=>{camera.auto=false;camera.scale=Math.max(.00001,camera.scale/1.25);$('fit').classList.remove('active');};$('fit').onclick=()=>fitCamera(true);
+  $('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if($('viewport').requestFullscreen)await $('viewport').requestFullscreen();else notify('이 브라우저에서는 창 전체화면 기능을 사용하세요.');}catch(e){notify('전체화면 요청을 처리하지 못했습니다.');}};
+  all('[data-preset]').forEach(b=>b.onclick=()=>loadPreset(b.dataset.preset));$('random').onclick=()=>loadPreset('random');
+  all('[data-body]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.body);syncEditor();});
+  ['mass','posx','posy','velx','vely'].forEach(id=>$(id).addEventListener('input',()=>{const raw=$(id).value,value=raw.trim()===''?NaN:Number(raw);if(id==='mass')draftM[selected]=value;else{const map={posx:2*selected,posy:2*selected+1,velx:6+2*selected,vely:7+2*selected};draftY[map[id]]=value;}markDirty();}));
+  ['method','tolerance','dt','epsilon'].forEach(id=>$(id).onchange=()=>{updateMethodControls();markDirty();});$('apply').onclick=applyDraft;
+  $('recenter').onclick=()=>{try{P.validate(draftY,draftM,currentOptions());draftY=P.recenter(draftY,draftM);syncEditor();markDirty();notify('초기 위치와 속도의 질량중심을 0으로 정렬했습니다. 적용 버튼으로 확정하세요.');}catch(e){notify(e.message);}};
+  $('play').onclick=()=>setPlaying(!playing);$('reset').onclick=()=>{reset(false);fitCamera(true);};$('step').onclick=()=>{setPlaying(false);if(!stopFlag)singleStep=true;};
+  $('ghost').onchange=()=>{reset(playing);fitCamera(true);};$('delta').onchange=()=>{if($('ghost').checked)reset(playing);};
+  $('help').onclick=()=>{setPlaying(false);modal('help-modal');};$('show-reports').onclick=()=>{renderReports();modal('reports-modal');};all('[data-close]').forEach(b=>b.onclick=closeModal);
+  all('.modal-shade').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closeModal();}));
+  $('save').onclick=save;$('save2').onclick=save;$('load').onclick=()=>$('file-input').click();$('csv').onclick=csv;
+  $('file-input').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;if(f.size>1024*1024){notify('초기조건 파일은 1 MB 이하만 허용합니다.');return;}try{loadConfig(JSON.parse(await f.text()));}catch(err){notify('불러오기 실패: '+err.message);}};
+  all('[data-experiment]').forEach(b=>b.onclick=()=>experiment(b.dataset.experiment));$('cancel-experiment').onclick=cancelExperiment;
+  $('export-reports').onclick=()=>download('three-body-experiment-log.json',JSON.stringify({version:P.VERSION,reports},null,2));
+  document.addEventListener('keydown',e=>{
+    if(activeModal){
+      if(e.key==='Escape'){closeModal();e.preventDefault();}
+      if(e.key==='Tab'){const items=Array.from($(activeModal).querySelectorAll('button,a[href],input,select')).filter(x=>!x.disabled);if(items.length){const first=items[0],last=items[items.length-1];if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault();}else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault();}}}return;
+    }
+    if(e.target.closest('input,select,textarea,button')||e.ctrlKey||e.metaKey||e.altKey)return;
+    if(e.code==='Space'){e.preventDefault();setPlaying(!playing);}else if(e.key.toLowerCase()==='r'){reset(false);fitCamera(true);}else if(e.key.toLowerCase()==='f')fitCamera(true);else if(e.key==='.'){$('step').click();}
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){setPlaying(false);prevTime=0;}});
+  function tick(now){
+    if(!prevTime)prevTime=now;const dt=Math.min(.05,Math.max(0,(now-prevTime)/1000));prevTime=now;
+    if(playing&&!activeModal){accumulator=Math.min(2,accumulator+dt*Number($('speed').value));advanceBudget(7);}else if(singleStep)advanceBudget(7);
+    draw();frameCount++;fpsFrames++;if(now-fpsEpoch>750){fps=fpsFrames*1000/(now-fpsEpoch);fpsFrames=0;fpsEpoch=now;}
+    if(now-metricTime>180){updateReadouts();drawCharts();metricTime=now;}requestAnimationFrame(tick);
+  }
+  new ResizeObserver(resize).observe($('viewport'));window.addEventListener('resize',resize);
+  loadPreset('figure8');resize();fitCamera(true);updateMethodControls();requestAnimationFrame(tick);
+  // Small inspectable API for reproducible research and headless browser tests.
+  window.ThreeBodyLab={version:P.VERSION,physics:P,config,loadConfig,loadPreset,pause:()=>setPlaying(false),play:()=>setPlaying(true),
+    state:()=>({t:sim.t,y:Array.from(sim.y),m:Array.from(sim.m),stats:{...sim.stats},options:{...sim.o},playing,dirty,stopped:stopFlag,records:count,workerActive:!!worker,reports:JSON.parse(JSON.stringify(reports))}),
+    advance:T=>{setPlaying(false);if(!Number.isFinite(T)||T<sim.t||T>sim.t+100)throw new Error('현재 시점부터 최대 100 시간단위만 진행하세요.');while(sim.t<T-1e-13){const target=Math.min(T,(sampleIndex+1)*SAMPLE);sim.advanceTo(target);if(ghostSim)ghostSim.advanceTo(target);capture();sampleIndex++;}pendingTarget=null;accumulator=0;updateReadouts();drawCharts();draw();return Array.from(sim.y);},runExperiment:experiment};
+})();
+</script>
+</body></html>
