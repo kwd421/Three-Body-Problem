@@ -1,0 +1,23 @@
+name: Verify and deploy research site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: research-site
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check repository migration status
+        run: |
+          if [ ! -f tools/build_site.py ]; then
+            echo 'Source migration is not yet complete.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python tools/build_site.py
