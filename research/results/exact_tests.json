@@ -1,0 +1,18 @@
+{
+  "exactRationalArithmeticChecks": 2410,
+  "arithmeticPassed": 2410,
+  "independentPythonCorruptionsRejected": 10,
+  "javaScriptCorruptionsRejected": 10,
+  "mutations": [
+    "endpoint collapsed to zero",
+    "tube collapsed to zero",
+    "initial position changed",
+    "mass changed",
+    "step removed",
+    "requested horizon changed",
+    "non-Newton softening",
+    "completion flag forged",
+    "time denominator zero",
+    "reversed interval"
+  ]
+}
